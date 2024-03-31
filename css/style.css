@@ -1,17 +1,19 @@
 body {
   /* background-image: url('../assets/blackjack.png'); */
   background-color: rgb(0, 118, 58);
-  background-repeat: no-repeat;
-  background-size: cover;
+  /* background-repeat: no-repeat; */
+  background-size: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  font-family: "Poller One", serif ;
+  /* padding: 50px; */
   
 }
 
 h1 {
-  font-size: 100px;
+  font-size:11vmin;
   color: white;
   /* margin-top: 15px; */
 }
@@ -29,21 +31,25 @@ h1 {
 .betting-section {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
   align-items: center;
   width: 100%;
+  margin: 20px;
 }
 
 .wagers {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
 }
 
 .wager-display {
-  font-size: 50px;
+  font-size: 6vmin;
   color: white;
-  background-color: black;
-  padding: 10px;
+  background-color: rgba(0, 0, 0, .3);
+  border-radius: 20px;
+  padding: 15px;
 }
 
 .wager-buttons {
@@ -51,20 +57,35 @@ h1 {
 }
 
 .chips {
-  font-size: 30px;
+  font-size: 4vmin;
   color: white;
   background-color: brown;
-  padding: 20px;
+  border: 5px dashed red;
+  padding: 3vmin;
   border-radius: 50%;
   margin: 5px;
 }
 
+.total-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ 
+}
+
 .total {
-  color: white;
-  background-color: coral;
-  font-size: 50px;
-  padding: 10px;
-  
+  color: rgb(255, 255, 255);
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  font-size: 6vmin;
+  padding: 15px;
+}
+
+#your-chips {
+  font-size: 4vmin;
+  color: yellow;
+  text-shadow: 0 0 4px black;
+
 }
 
 .action-buttons {
@@ -74,16 +95,20 @@ h1 {
 }
 
 .play {
-  font-size: 30px;
+  font-size: 5vmin;
   color: black;
-  background-color: aqua;
+  background-color: rgb(0, 252, 252);
   margin: 5px;
-  padding: 10px;
+  padding: 3vmin;
   border-radius: 10px;
+  /* border-style: groove; */
+  border: 5px outset rgb(255, 255, 0);
 }
 
-button:hover {
+.play:hover {
   border: 5px solid red;
 }
 
-
+.chips:hover{
+  border: 5px solid yellow;
+}
