@@ -16,11 +16,12 @@ h1 {
 
 .betting-section {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  width: 100%;
 }
 
-.wager {
+.wagers {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,6 +52,24 @@ h1 {
   background-color: coral;
   font-size: 50px;
   padding: 10px;
+  
+}
+
+.action-buttons {
+  display: flex;
+}
+
+.play {
+  font-size: 30px;
+  color: black;
+  background-color: aqua;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+button:hover {
+  border: 5px solid red;
 }
 
 
