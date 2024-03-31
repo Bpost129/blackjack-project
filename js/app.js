@@ -45,4 +45,4 @@ function handleDeal() {
   wagerEl.textContent = `$${wagerTotal}`
 }
 
-earningsEl.textContent = `$${totalEarnings}`
+// earningsEl.textContent = `$${totalEarnings}`
