@@ -78,9 +78,25 @@ h1 {
 
 }
 
-/* #bet25 {
+#bet25 {
+  background-image: url('../assets/poker-chip-2.png');
+  background-size: 100%;
+}
 
-} */
+#bet10 {
+  background-image: url('../assets/poker-chip-5.png');
+  background-size: 100%;
+}
+
+#bet5 {
+  background-image: url('../assets/poker-chip-4.png');
+  background-size: 100%;
+}
+
+#bet1 {
+  background-image: url('../assets/poker-chip-3.png');
+  background-size: 100%;
+}
 
 .total-display {
   display: flex;
