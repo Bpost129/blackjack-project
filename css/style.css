@@ -15,7 +15,6 @@ body {
 h1 {
   font-size:11vmin;
   color: white;
-  /* margin-top: 15px; */
 }
 
 .card-display {
@@ -70,7 +69,6 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
- 
 }
 
 .total {
@@ -99,9 +97,8 @@ h1 {
   color: black;
   background-color: rgb(0, 252, 252);
   margin: 5px;
-  padding: 3vmin;
+  padding: 2.5vmin;
   border-radius: 10px;
-  /* border-style: groove; */
   border: 5px outset rgb(255, 255, 0);
 }
 
