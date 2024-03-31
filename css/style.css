@@ -1,5 +1,6 @@
 body {
-  background-image: url('../assets/blackjack.png');
+  /* background-image: url('../assets/blackjack.png'); */
+  background-color: rgb(0, 118, 58);
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;
