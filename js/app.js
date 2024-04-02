@@ -97,36 +97,50 @@ function countTotalFlop(p1, p2, d1, d2) {
   let pTotal = 0
   let dTotal = 0
   
-  if (!faces.includes(p1.substring(1))) {
+  if (!faces.includes(p1.substring(1)) && p1.substring(1) !== 'A') {
     pTotal += parseInt(p1.substring(1))
-  } else if (p1.substring(1) == 'A'){
+  } else if (!faces.includes(p1.substring(1)) && p1.substring(1) === 'A'){
     pTotal += 11
   } else {
     pTotal += 10
   }
-
-  if (!faces.includes(p2.substring(1))) {
+  
+  if (!faces.includes(p2.substring(1)) && p2.substring(1) !== 'A') {
     pTotal += parseInt(p2.substring(1))
-  } else if (p2.substring(1) == 'A'){
-    pTotal += 11
+  } else if (!faces.includes(p2.substring(1)) && p2.substring(1) === 'A'){
+    if ((pTotal + 11) > 21) {
+      pTotal += 1
+    } else {
+      pTotal += 11
+    }
   } else {
     pTotal += 10
   }
-
-  // if (!faces.includes(dealerIdx1.substring(1))) {
-  //   dealerTotal += parseInt(dealerIdx1.substring(1))
+  
+  // if (!faces.includes(d1.substring(1)) && d1.substring(1) !== 'A') {
+  //   dTotal += parseInt(d1.substring(1))
+  // } else if (!faces.includes(d1.substring(1)) && d1.substring(1) === 'A') {
+  //   if ((dTotal + 11) > 21) {
+  //     dTotal += 1
+  //   } else {
+  //     dTotal += 11
+  //   }
   // } else {
-  //   dealerTotal += 10
+  //   dTotal += 10
   // }
 
-  if (!faces.includes(d2.substring(1))) {
+  if (!faces.includes(d2.substring(1)) && d2.substring(1) !== 'A') {
     dTotal += parseInt(d2.substring(1))
-  } else if (d2.substring(1) == 'A'){
-    dTotal += 11
+  } else if (!faces.includes(d2.substring(1)) && d2.substring(1) === 'A') {
+    if ((dTotal + 11) > 21) {
+      dTotal += 1
+    } else {
+      dTotal += 11
+    }
   } else {
     dTotal += 10
   }
-
+  
   return [pTotal, dTotal]
 }
 
