@@ -39,7 +39,7 @@
   .card.outline {
     background-image: none;
     background-color: rgba(195, 195, 195, 0.5);
-    border: 0.15em dashed #daa520; }
+    border: 0.15em solid whitesmoke; }
 
 .card.diamonds.A,
 .card.dA,
