@@ -1,5 +1,5 @@
 body {
-  /* background-image: url('../assets/imgs/blackjack.png'); */
+  /* background-image: url('../images/chips/blackjack.png'); */
   background-color: rgb(0, 118, 58);
   /* background-repeat: no-repeat; */
   background-size: 100%;
@@ -18,20 +18,20 @@ h1 {
 }
 
 .card-display {
-  color: white;
+  /* color: white; */
   /* background-color: red; */
-  padding: 10px;
+  /* padding: 10px; */
   margin: 0 0 5vmin 0;
   display: flex;
   flex-direction: column;
   align-content: space-between;
   
 }
-.cards {
+/* .cards {
   height: 50px;
   margin: 20px;
   background-color: red;
-}
+} */
 
 .betting-section {
   display: flex;
@@ -81,28 +81,28 @@ h1 {
 }
 
 #bet50 {
-  background-image: url('../assets/imgs/poker-chip-1.png');
+  background-image: url('../images/chips/poker-chip-1.png');
   background-size: 100%;
 
 }
 
 #bet25 {
-  background-image: url('../assets/imgs/poker-chip-2.png');
+  background-image: url('../images/chips/poker-chip-2.png');
   background-size: 100%;
 }
 
 #bet10 {
-  background-image: url('../assets/imgs/poker-chip-5.png');
+  background-image: url('../images/chips/poker-chip-5.png');
   background-size: 100%;
 }
 
 #bet5 {
-  background-image: url('../assets/imgs/poker-chip-4.png');
+  background-image: url('../images/chips/poker-chip-4.png');
   background-size: 100%;
 }
 
 #bet1 {
-  background-image: url('../assets/imgs/poker-chip-3.png');
+  background-image: url('../images/chips/poker-chip-3.png');
   background-size: 100%;
 }
 
