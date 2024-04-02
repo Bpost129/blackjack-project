@@ -13,6 +13,7 @@ const wagerBtns = [...document.querySelectorAll('.wager-buttons')]
 const wagerEl = document.querySelector('.wager-display')
 const earningsEl = document.querySelector('.total')
 const dealBtn = document.querySelector('#deal')
+const yourChipsMsg = document.getElementById('your-chips')
 
 earningsEl.textContent = `$${totalEarnings}`
 
