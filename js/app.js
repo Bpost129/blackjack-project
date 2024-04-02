@@ -68,23 +68,70 @@ function handleDeal() {
 
 function distributeCards() {
   playerIdx1 = gameDeck.shift()
-  playerCard1.className = (`card large ${playerIdx1}`)
-  // setTimeout(() => {
-  //   dealerIdx1 = gameDeck.shift()
-  // }, 500)
+  dealerIdx1 = gameDeck.shift()
+  playerIdx2 = gameDeck.shift()
+  dealerIdx2 = gameDeck.shift()
+  playerCard1.className = `card large ${playerIdx1}`
+  setTimeout(() => {
+    dealerCard1.className = `card large back`
+  }, 500)
+  setTimeout(() => {
+    playerCard2.className = `card large ${playerIdx2}`
+    playerCount.textContent = `${playerTotal}`
+  }, 1000)
+  setTimeout(() => {
+    dealerCard2.className = `card large ${dealerIdx2}`
+    dealerCount.textContent = `${dealerTotal}`
+  }, 1500)
 
-  let faces = ['J', 'Q', 'K']
-  if (!faces.includes(playerIdx1.substring(1))) {
-    playerTotal += parseInt(playerIdx1.substring(1))
-  } else {
-    playerTotal += 10
-  }
+  let totals = countTotalFlop(playerIdx1, playerIdx2, dealerIdx1, dealerIdx2)
+  playerTotal = totals[0]
+  dealerTotal = totals[1]
   
-  console.log(playerTotal)
+  console.log('playerTotal: ' + playerTotal)
+  console.log('dealerTotal: ' + dealerTotal)
+}
+
+function countTotalFlop(p1, p2, d1, d2) {
+  let faces = ['J', 'Q', 'K']
+  let pTotal = 0
+  let dTotal = 0
+  
+  if (!faces.includes(p1.substring(1))) {
+    pTotal += parseInt(p1.substring(1))
+  } else if (p1.substring(1) == 'A'){
+    pTotal += 11
+  } else {
+    pTotal += 10
+  }
+
+  if (!faces.includes(p2.substring(1))) {
+    pTotal += parseInt(p2.substring(1))
+  } else if (p2.substring(1) == 'A'){
+    pTotal += 11
+  } else {
+    pTotal += 10
+  }
+
+  // if (!faces.includes(dealerIdx1.substring(1))) {
+  //   dealerTotal += parseInt(dealerIdx1.substring(1))
+  // } else {
+  //   dealerTotal += 10
+  // }
+
+  if (!faces.includes(d2.substring(1))) {
+    dTotal += parseInt(d2.substring(1))
+  } else if (d2.substring(1) == 'A'){
+    dTotal += 11
+  } else {
+    dTotal += 10
+  }
+
+  return [pTotal, dTotal]
 }
 
 
-
+// basically copied from memory-game 
 function shuffleDeck(deck) {
   let cardsToShuffle = [...deck]
   let shuffleAmount = cardsToShuffle.length
