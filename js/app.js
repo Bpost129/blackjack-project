@@ -12,9 +12,10 @@ let wagerTotal = 0
 let playerTotal = 0
 let dealerTotal = 0
 let hitCount = 0
-let isDealerTurn = false
+let aceCount = 0
+let turn
 
-let turn, playerIdx1, playerIdx2, dealerIdx1, dealerIdx2, gameDeck
+let playerIdx1, playerIdx2, dealerIdx1, dealerIdx2, gameDeck
 
 /*------------------------ Cached Element References ------------------------*/
 const playerCardEl = document.querySelector('.player-cards')
@@ -45,13 +46,17 @@ wagerBtns.forEach(wagerBtn => {
 })
 dealBtn.addEventListener('click', handleDeal)
 hitBtn.addEventListener('click', handleHit)
+stayBtn.addEventListener('click', handleStay)
+doubleBtn.addEventListener('click', handleDouble)
 
 /*-------------------------------- Functions --------------------------------*/
 
 init()
 
+
 function init() {
   gameDeck = shuffleDeck(deckCopy)
+  turn = 1
 }
 
 function handleWager(e) {
@@ -63,15 +68,20 @@ function handleWager(e) {
 function handleDeal() {
   totalEarnings -= wagerTotal
   earningsEl.textContent = `$${totalEarnings}`
-  wagerTotal = 0
-  wagerEl.textContent = `$${wagerTotal}`
+
   while (hitCount > 0) {
     playerCardEl.removeChild(playerCardEl.lastChild)
     hitCount--
   }
+  aceCount = 0
+
   playerCount.textContent = `0`
   dealerCount.textContent = `0`
   distributeCards()
+
+  if (playerTotal >= 21) {
+    handleStay()
+  }
 }
 
 function distributeCards() {
@@ -112,6 +122,7 @@ function countTotalFlop(p1, p2, d1, d2) {
   if (!faces.includes(p2.substring(1)) && p2.substring(1) !== 'A') {
     pTotal += parseInt(p2.substring(1))
   } else if (!faces.includes(p2.substring(1)) && p2.substring(1) === 'A'){
+    aceCount++
     if ((pTotal + 11) > 21) {
       pTotal += 1
     } else {
@@ -157,12 +168,14 @@ function handleHit() {
   playerCardEl.appendChild(extraCardEl)
   addHitToTotal(extraCardIdx)
   playerCount.textContent = `${playerTotal}`
+  doubleBtn.disabled = true
 }
 
 function addHitToTotal(extra) {
   if (!faces.includes(extra) && extra !== 'A') {
     playerTotal += parseInt(extra)
   } else if (!faces.includes(extra) && extra === 'A'){
+
     if ((playerTotal + 11) > 21) {
       playerTotal += 1
     } else {
@@ -172,8 +185,74 @@ function addHitToTotal(extra) {
     playerTotal += 10
   }
 
+  if (playerTotal >= 21) {
+    setTimeout(handleStay, 1000)
+  } 
+
   //  Must test for when cards
   //  are added after aces
+}
+
+function handleDouble() {
+  hitCount++
+  let extraCard = gameDeck.shift()
+  let extraCardIdx = extraCard.substring(1)
+  let extraCardEl = document.createElement('div')
+
+  wagerEl.textContent = `$${wagerTotal * 2}`
+  totalEarnings -= wagerTotal
+  earningsEl.textContent = `$${totalEarnings}`
+
+  extraCardEl.className = `card large ${extraCard} west`
+  playerCardEl.appendChild(extraCardEl)
+  addHitToTotal(extraCardIdx)
+  playerCount.textContent = `${playerTotal}`
+  setTimeout(handleStay, 1000)
+  
+}
+
+
+function handleStay() {
+  turn *= -1
+  setTimeout(() => {
+    dealerCard1.className = `card large ${dealerIdx1}`
+
+    if (!faces.includes(dealerIdx1.substring(1)) && dealerIdx1.substring(1) !== 'A') {
+      dealerTotal += parseInt(dealerIdx1.substring(1))
+    } else if (!faces.includes(dealerIdx1.substring(1)) && dealerIdx1.substring(1) === 'A') {
+      if ((dealerTotal + 11) > 21) {
+        dealerTotal += 1
+      } else {
+        dealerTotal += 11
+      }
+    } else {
+      dealerTotal += 10
+    }
+
+    dealerCount.textContent = dealerTotal
+  }, 500)
+  
+  disableBtns()
+}
+
+function handleDealerTurn() {
+  if (dealerTotal < 17) {
+
+  }
+}
+
+function disableBtns() {
+  if (turn !== 1) {
+    dealBtn.disabled = true
+    hitBtn.disabled = true
+    stayBtn.disabled = true
+    doubleBtn.disabled = true
+  } else {
+    dealBtn.disabled = false
+    hitBtn.disabled = false
+    stayBtn.disabled = false
+    doubleBtn.disabled = false
+  }
 }
 
 // basically copied from memory-game 
