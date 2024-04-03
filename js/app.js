@@ -2,6 +2,8 @@
 
 const fourDecks = ["dA","dQ","dK","dJ","d10","d09","d08","d07","d06","d05","d04","d03","d02","hA","hQ","hK","hJ","h10","h09","h08","h07","h06","h05","h04","h03","h02","cA","cQ","cK","cJ","c10","c09","c08","c07","c06","c05","c04","c03","c02","sA","sQ","sK","sJ","s10","s09","s08","s07","s06","s05","s04","s03","s02","dA","dQ","dK","dJ","d10","d09","d08","d07","d06","d05","d04","d03","d02","hA","hQ","hK","hJ","h10","h09","h08","h07","h06","h05","h04","h03","h02","cA","cQ","cK","cJ","c10","c09","c08","c07","c06","c05","c04","c03","c02","sA","sQ","sK","sJ","s10","s09","s08","s07","s06","s05","s04","s03","s02","dA","dQ","dK","dJ","d10","d09","d08","d07","d06","d05","d04","d03","d02","hA","hQ","hK","hJ","h10","h09","h08","h07","h06","h05","h04","h03","h02","cA","cQ","cK","cJ","c10","c09","c08","c07","c06","c05","c04","c03","c02","sA","sQ","sK","sJ","s10","s09","s08","s07","s06","s05","s04","s03","s02","dA","dQ","dK","dJ","d10","d09","d08","d07","d06","d05","d04","d03","d02","hA","hQ","hK","hJ","h10","h09","h08","h07","h06","h05","h04","h03","h02","cA","cQ","cK","cJ","c10","c09","c08","c07","c06","c05","c04","c03","c02","sA","sQ","sK","sJ","s10","s09","s08","s07","s06","s05","s04","s03","s02"]
 
+const faces = ['J', 'Q', 'K']
+
 /*---------------------------- Variables (state) ----------------------------*/
 let deckCopy = [...fourDecks]
 
@@ -11,10 +13,10 @@ let playerTotal = 0
 let dealerTotal = 0
 let isDealerTurn = false
 
-let playerIdx1, playerIdx2, dealerIdx1, dealerIdx2, gameDeck
+let turn, playerIdx1, playerIdx2, dealerIdx1, dealerIdx2, gameDeck
 
 /*------------------------ Cached Element References ------------------------*/
-
+const playerCardEl = document.querySelector('.player-cards')
 const playerCard1 = document.querySelector('#player-card-1')
 const playerCard2 = document.querySelector('#player-card-2')
 const dealerCard1 = document.querySelector('#dealer-card-1')
@@ -41,6 +43,7 @@ wagerBtns.forEach(wagerBtn => {
   wagerBtn.addEventListener('click', handleWager)
 })
 dealBtn.addEventListener('click', handleDeal)
+hitBtn.addEventListener('click', handleHit)
 
 /*-------------------------------- Functions --------------------------------*/
 
@@ -60,7 +63,7 @@ function handleDeal() {
   totalEarnings -= wagerTotal
   earningsEl.textContent = `$${totalEarnings}`
   wagerTotal = 0
-  wagerEl.textContent = `$${wagerTotal}`
+  // wagerEl.textContent = `$${wagerTotal}`
 
   //distribute 2 cards per player
   distributeCards()
@@ -87,13 +90,9 @@ function distributeCards() {
   let totals = countTotalFlop(playerIdx1, playerIdx2, dealerIdx1, dealerIdx2)
   playerTotal = totals[0]
   dealerTotal = totals[1]
-  
-  console.log('playerTotal: ' + playerTotal)
-  console.log('dealerTotal: ' + dealerTotal)
 }
 
 function countTotalFlop(p1, p2, d1, d2) {
-  let faces = ['J', 'Q', 'K']
   let pTotal = 0
   let dTotal = 0
   
@@ -144,6 +143,31 @@ function countTotalFlop(p1, p2, d1, d2) {
   return [pTotal, dTotal]
 }
 
+function handleHit() {
+  let extraCard = gameDeck.shift()
+  let extraCardIdx = extraCard.substring(1)
+  console.log(extraCardIdx)
+  let extraCardEl = document.createElement('div')
+  extraCardEl.className = `card large ${extraCard}`
+  playerCardEl.appendChild(extraCardEl)
+  addHitToTotal(extraCardIdx)
+  playerCount.textContent = `${playerTotal}`
+}
+
+function addHitToTotal(extra) {
+  if (!faces.includes(extra) && extra !== 'A') {
+    playerTotal += parseInt(extra)
+  } else if (!faces.includes(extra) && extra === 'A'){
+    if ((playerTotal + 11) > 21) {
+      playerTotal += 1
+    } else {
+      playerTotal += 11
+    }
+  } else {
+    playerTotal += 10
+  }
+
+}
 
 // basically copied from memory-game 
 function shuffleDeck(deck) {
