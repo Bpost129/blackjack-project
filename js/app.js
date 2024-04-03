@@ -11,6 +11,7 @@ let totalEarnings = 1000
 let wagerTotal = 0
 let playerTotal = 0
 let dealerTotal = 0
+let hitCount = 0
 let isDealerTurn = false
 
 let turn, playerIdx1, playerIdx2, dealerIdx1, dealerIdx2, gameDeck
@@ -64,8 +65,12 @@ function handleDeal() {
   earningsEl.textContent = `$${totalEarnings}`
   wagerTotal = 0
   // wagerEl.textContent = `$${wagerTotal}`
-
-  //distribute 2 cards per player
+  while (hitCount > 0) {
+    playerCardEl.removeChild(playerCardEl.lastChild)
+    hitCount--
+  }
+  playerCount.textContent = `0`
+  dealerCount.textContent = `0`
   distributeCards()
 }
 
@@ -144,9 +149,9 @@ function countTotalFlop(p1, p2, d1, d2) {
 }
 
 function handleHit() {
+  hitCount++
   let extraCard = gameDeck.shift()
   let extraCardIdx = extraCard.substring(1)
-  console.log(extraCardIdx)
   let extraCardEl = document.createElement('div')
   extraCardEl.className = `card large ${extraCard}`
   playerCardEl.appendChild(extraCardEl)
