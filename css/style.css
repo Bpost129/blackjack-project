@@ -170,6 +170,6 @@ h1 {
   box-shadow: 0 0 12px black;
 }
 
-.play:active:hover {
+/* .play:active:hover {
   border: 5px outset rgb(255, 255, 0);
-}
+} */

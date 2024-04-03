@@ -282,7 +282,7 @@ function handleDealerTurn() {
   }
 
   if ((dealerTotal < playerTotal && playerTotal <= 21) || (dealerTotal > 21 && playerTotal <= 21)) {
-    totalEarnings += wagerTotal
+    totalEarnings += (wagerTotal * 2)
     wagerEl.textContent = `$0`
     earningsEl.textContent = `$${totalEarnings}`
   }
