@@ -12,6 +12,7 @@ let wagerTotal = 0
 let playerTotal = 0
 let dealerTotal = 0
 let hitCount = 0
+let dHitCount = 0
 let aceCount = 0
 let turn
 
@@ -19,6 +20,7 @@ let playerIdx1, playerIdx2, dealerIdx1, dealerIdx2, gameDeck
 
 /*------------------------ Cached Element References ------------------------*/
 const playerCardEl = document.querySelector('.player-cards')
+const dealerCardEl = document.querySelector('.dealer-cards')
 const playerCard1 = document.querySelector('#player-card-1')
 const playerCard2 = document.querySelector('#player-card-2')
 const dealerCard1 = document.querySelector('#dealer-card-1')
@@ -73,6 +75,10 @@ function handleDeal() {
     playerCardEl.removeChild(playerCardEl.lastChild)
     hitCount--
   }
+  while (dHitCount > 0) {
+    dealerCardEl.removeChild(dealerCardEl.lastChild)
+    dHitCount--
+  }
   aceCount = 0
 
   playerCount.textContent = `0`
@@ -80,7 +86,7 @@ function handleDeal() {
   distributeCards()
 
   if (playerTotal >= 21) {
-    handleStay()
+    setTimeout(handleStay, 1000)
   }
 }
 
@@ -172,6 +178,7 @@ function handleHit() {
 }
 
 function addHitToTotal(extra) {
+  //refactor to use for dealer as well
   if (!faces.includes(extra) && extra !== 'A') {
     playerTotal += parseInt(extra)
   } else if (!faces.includes(extra) && extra === 'A'){
@@ -193,14 +200,38 @@ function addHitToTotal(extra) {
   //  are added after aces
 }
 
+function addDealerHitToTotal(extra) {
+  //refactor to use for dealer as well
+  if (!faces.includes(extra) && extra !== 'A') {
+    dealerTotal += parseInt(extra)
+  } else if (!faces.includes(extra) && extra === 'A'){
+
+    if ((dealerTotal + 11) > 21) {
+      dealerTotal += 1
+    } else {
+      dealerTotal += 11
+    }
+  } else {
+    dealerTotal += 10
+  }
+
+  // if (dealerTotal >= 21) {
+  //   setTimeout(handleStay, 1000)
+  // } 
+
+  //  Must test for when cards
+  //  are added after aces
+}
+
 function handleDouble() {
   hitCount++
   let extraCard = gameDeck.shift()
   let extraCardIdx = extraCard.substring(1)
   let extraCardEl = document.createElement('div')
 
-  wagerEl.textContent = `$${wagerTotal * 2}`
   totalEarnings -= wagerTotal
+  wagerTotal *= 2
+  wagerEl.textContent = `$${wagerTotal}`
   earningsEl.textContent = `$${totalEarnings}`
 
   extraCardEl.className = `card large ${extraCard} west`
@@ -214,31 +245,53 @@ function handleDouble() {
 
 function handleStay() {
   turn *= -1
-  setTimeout(() => {
-    dealerCard1.className = `card large ${dealerIdx1}`
-
-    if (!faces.includes(dealerIdx1.substring(1)) && dealerIdx1.substring(1) !== 'A') {
-      dealerTotal += parseInt(dealerIdx1.substring(1))
-    } else if (!faces.includes(dealerIdx1.substring(1)) && dealerIdx1.substring(1) === 'A') {
-      if ((dealerTotal + 11) > 21) {
-        dealerTotal += 1
-      } else {
-        dealerTotal += 11
-      }
-    } else {
-      dealerTotal += 10
-    }
-
-    dealerCount.textContent = dealerTotal
-  }, 500)
   
+  dealerCard1.className = `card large ${dealerIdx1}`
+
+  if (!faces.includes(dealerIdx1.substring(1)) && dealerIdx1.substring(1) !== 'A') {
+    dealerTotal += parseInt(dealerIdx1.substring(1))
+  } else if (!faces.includes(dealerIdx1.substring(1)) && dealerIdx1.substring(1) === 'A') {
+    if ((dealerTotal + 11) > 21) {
+      dealerTotal += 1
+    } else {
+      dealerTotal += 11
+    }
+  } else {
+    dealerTotal += 10
+  }
+
+  dealerCount.textContent = dealerTotal
+  
+  //changed timing
+
   disableBtns()
+  setTimeout(handleDealerTurn, 2000)
 }
 
 function handleDealerTurn() {
-  if (dealerTotal < 17) {
-
+  while (dealerTotal < 17) {
+    //handleHit
+    dHitCount++
+    let extraCard = gameDeck.shift()
+    let extraCardIdx = extraCard.substring(1)
+    let extraCardEl = document.createElement('div')
+    extraCardEl.className = `card large ${extraCard}`
+    dealerCardEl.appendChild(extraCardEl)
+    addDealerHitToTotal(extraCardIdx)
+    dealerCount.textContent = `${dealerTotal}`
   }
+
+  if ((dealerTotal < playerTotal && playerTotal <= 21) || (dealerTotal > 21 && playerTotal <= 21)) {
+    totalEarnings += wagerTotal
+    wagerEl.textContent = `$0`
+    earningsEl.textContent = `$${totalEarnings}`
+  }
+  
+  turn *= -1
+  disableBtns()
+  wagerTotal = 0
+  wagerEl.textContent = `$${wagerTotal}`
+
 }
 
 function disableBtns() {
