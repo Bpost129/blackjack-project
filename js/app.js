@@ -64,7 +64,7 @@ function handleDeal() {
   totalEarnings -= wagerTotal
   earningsEl.textContent = `$${totalEarnings}`
   wagerTotal = 0
-  // wagerEl.textContent = `$${wagerTotal}`
+  wagerEl.textContent = `$${wagerTotal}`
   while (hitCount > 0) {
     playerCardEl.removeChild(playerCardEl.lastChild)
     hitCount--
@@ -172,6 +172,8 @@ function addHitToTotal(extra) {
     playerTotal += 10
   }
 
+  //  Must test for when cards
+  //  are added after aces
 }
 
 // basically copied from memory-game 
