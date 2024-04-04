@@ -37,6 +37,19 @@ h1 {
   text-shadow: 0 0 8px black;
 }
 
+.play-button {
+  text-align: center;
+  margin-bottom: 40px;
+  width: 300px;
+  height: 50px;
+  font-size: 3.2vmin;
+  font-weight: 700;
+  background-color: rgb(0, 100, 52);
+  color: yellow;
+  border-radius: 8px;
+  border: 5px solid black;
+}
+
 .dealer-display, .player-display {
   display: flex;
   justify-content: center;

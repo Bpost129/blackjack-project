@@ -35,6 +35,7 @@ const wagerEl = document.querySelector('.wager-display')
 const earningsEl = document.querySelector('.total')
 const yourChipsMsg = document.getElementById('your-chips')
 const resultEl = document.querySelector('.result')
+const playBtn = document.querySelector('.play-button')
 
 const dealBtn = document.querySelector('#deal')
 const hitBtn = document.querySelector('#hit')
@@ -52,6 +53,7 @@ dealBtn.addEventListener('click', handleDeal)
 hitBtn.addEventListener('click', handleHit)
 stayBtn.addEventListener('click', handleStay)
 doubleBtn.addEventListener('click', handleDouble)
+playBtn.addEventListener('click', handlePlay)
 
 /*-------------------------------- Functions --------------------------------*/
 
@@ -60,8 +62,16 @@ init()
 
 function init() {
   gameDeck = shuffleDeck(deckCopy)
-  turn = 1
+  turn = -1
+  playBtn.style.display = ''
+  resultEl.style.display = 'none'
   //can press deal on init with no bet
+}
+
+function handlePlay() {
+  turn *= -1
+  playBtn.style.display = 'none'
+  resultEl.style.display = ''
 }
 
 function handleWager(e) {
@@ -211,22 +221,27 @@ function handleStay() {
 }
 
 function handleDealerTurn() {
-  while (dealerTotal < 17) {
-    dHitCount++
-    let extraCard = gameDeck.shift()
-    let extraCardIdx = extraCard.substring(1)
-    let extraCardEl = document.createElement('div')
-    extraCardEl.className = `card large ${extraCard}`
-    dealerCardEl.appendChild(extraCardEl)
-    dealerTotal = addHitToTotal(extraCardIdx, dealerTotal, dAceCount)
-    dealerCount.textContent = `${dealerTotal}`
-  }
+  // let dealerHits = setInterval(() => {
+    while (dealerTotal < 17) {
+      dHitCount++
+      let extraCard = gameDeck.shift()
+      let extraCardIdx = extraCard.substring(1)
+      let extraCardEl = document.createElement('div')
+      extraCardEl.className = `card large ${extraCard}`
+      dealerTotal = addHitToTotal(extraCardIdx, dealerTotal, dAceCount)
+
+      setTimeout(() => {
+        dealerCardEl.appendChild(extraCardEl)
+        dealerCount.textContent = `${dealerTotal}`
+      }, 200)
+      
+    }
+  // }, 200)
+  // clearInterval(dealerHits)
 
   calculateWinnerAndEarnings()
   turn *= -1
-  setTimeout(() => {
-    reset()
-  }, 3000)
+  setTimeout(reset, 3000)
 }
 
 function addHitToTotal(extra, userSum, aces) {
