@@ -63,6 +63,7 @@ init()
 function init() {
   gameDeck = shuffleDeck(deckCopy)
   turn = -1
+  disableBtns()
   playBtn.style.display = ''
   resultEl.style.display = 'none'
   //can press deal on init with no bet
@@ -350,11 +351,17 @@ function disableBtns() {
     hitBtn.disabled = true
     stayBtn.disabled = true
     doubleBtn.disabled = true
+    wagerBtns.forEach(btn => {
+      btn.disabled = true
+    })
   } else {
     dealBtn.disabled = false
     hitBtn.disabled = false
     stayBtn.disabled = false
     doubleBtn.disabled = false
+    wagerBtns.forEach(btn => {
+      btn.disabled = false
+    })
   }
 }
 
