@@ -66,7 +66,6 @@ function init() {
   disableBtns()
   playBtn.style.display = ''
   resultEl.style.display = 'none'
-  //can press deal on init with no bet
 }
 
 function handlePlay() {
@@ -76,9 +75,12 @@ function handlePlay() {
 }
 
 function handleWager(e) {
-  const btnIdx = Math.floor(e.target.id.substring(3))
-  wagerTotal += btnIdx
-  wagerEl.textContent = `$${wagerTotal}`
+  if (turn === 1) {
+    const btnIdx = Math.floor(e.target.id.substring(3))
+    wagerTotal += btnIdx
+    wagerEl.textContent = `$${wagerTotal}`
+  }
+  
   disableBtns()
 }
 
@@ -91,6 +93,10 @@ function handleDeal() {
     setTimeout(handleStay, 1000)
   }
 }
+
+//
+//must reshuffle when cards are low
+//
 
 function distributeCards() {
   playerIdx1 = gameDeck.shift()
@@ -222,25 +228,20 @@ function handleStay() {
 }
 
 function handleDealerTurn() {
-  // let dealerHits = setInterval(() => {
-    while (dealerTotal < 17) {
-      dHitCount++
-      let extraCard = gameDeck.shift()
-      let extraCardIdx = extraCard.substring(1)
-      let extraCardEl = document.createElement('div')
-      extraCardEl.className = `card large ${extraCard}`
-      dealerTotal = addHitToTotal(extraCardIdx, dealerTotal, dAceCount)
-
-      setTimeout(() => {
-        dealerCardEl.appendChild(extraCardEl)
-        dealerCount.textContent = `${dealerTotal}`
-      }, 200)
-      
-    }
-  // }, 200)
-  // clearInterval(dealerHits)
-
-  calculateWinnerAndEarnings()
+  while (dealerTotal < 17) {
+    dHitCount++
+    let extraCard = gameDeck.shift()
+    let extraCardIdx = extraCard.substring(1)
+    let extraCardEl = document.createElement('div')
+    extraCardEl.className = `card large ${extraCard}`
+    dealerTotal = addHitToTotal(extraCardIdx, dealerTotal, dAceCount)
+    setTimeout(() => {
+      dealerCardEl.appendChild(extraCardEl)
+      dealerCount.textContent = `${dealerTotal}`
+    }, dHitCount * 1000)
+  }
+  
+  setTimeout(calculateWinnerAndEarnings, 1000)
   turn *= -1
   setTimeout(reset, 3000)
 }
@@ -252,9 +253,9 @@ function addHitToTotal(extra, userSum, aces) {
         userSum += parseInt(extra)
       }  else {
         for (let i = 1; i <= aces; i++) {
-            userSum -= 10
-            userSum += parseInt(extra)
-            if (userSum <= 21) break
+          userSum -= 10
+          userSum += parseInt(extra)
+          if (userSum <= 21) break
         }
       }
     } else if (!faces.includes(extra) && extra === 'A') {
