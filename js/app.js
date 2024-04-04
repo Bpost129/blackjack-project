@@ -61,12 +61,14 @@ init()
 function init() {
   gameDeck = shuffleDeck(deckCopy)
   turn = 1
+  //can press deal on init with no bet
 }
 
 function handleWager(e) {
   const btnIdx = Math.floor(e.target.id.substring(3))
   wagerTotal += btnIdx
   wagerEl.textContent = `$${wagerTotal}`
+  disableBtns()
 }
 
 function handleDeal() {
@@ -220,30 +222,10 @@ function handleDealerTurn() {
     dealerCount.textContent = `${dealerTotal}`
   }
 
-  if ((dealerTotal < playerTotal && playerTotal <= 21) || (dealerTotal > 21 && playerTotal <= 21)) {
-    totalEarnings += (wagerTotal * 2)
-    wagerEl.textContent = `$0`
-    earningsEl.textContent = `$${totalEarnings}`
-    resultEl.textContent = `Player Wins!`
-  } 
-
-  if ((dealerTotal === playerTotal) && (dealerTotal <= 21 && playerTotal <= 21)) {
-    totalEarnings += wagerTotal
-    wagerEl.textContent = `$0`
-    earningsEl.textContent = `$${totalEarnings}`
-    resultEl.textContent = `Push!`
-  }
-
-  if ((dealerTotal > playerTotal && dealerTotal <= 21) || (dealerTotal <= 21 && playerTotal > 21)) {
-    wagerEl.textContent = `$0`
-    earningsEl.textContent = `$${totalEarnings}`
-    resultEl.textContent = `Dealer Wins!`
-  }
-  
+  calculateWinnerAndEarnings()
   turn *= -1
   setTimeout(() => {
     reset()
-    disableBtns()
   }, 3000)
 }
 
@@ -300,6 +282,28 @@ function addHitToTotal(extra, userSum, aces) {
   }
   
   return userSum
+}
+
+function calculateWinnerAndEarnings() {
+  if ((dealerTotal < playerTotal && playerTotal <= 21) || (dealerTotal > 21 && playerTotal <= 21)) {
+    totalEarnings += (wagerTotal * 2)
+    wagerEl.textContent = `$0`
+    earningsEl.textContent = `$${totalEarnings}`
+    resultEl.textContent = `Player Wins!`
+  } 
+
+  if ((dealerTotal === playerTotal) && (dealerTotal <= 21 && playerTotal <= 21)) {
+    totalEarnings += wagerTotal
+    wagerEl.textContent = `$0`
+    earningsEl.textContent = `$${totalEarnings}`
+    resultEl.textContent = `Push!`
+  }
+
+  if ((dealerTotal > playerTotal && dealerTotal <= 21) || (dealerTotal <= 21 && playerTotal > 21)) {
+    wagerEl.textContent = `$0`
+    earningsEl.textContent = `$${totalEarnings}`
+    resultEl.textContent = `Dealer Wins!`
+  }
 }
 
 function reset() {
