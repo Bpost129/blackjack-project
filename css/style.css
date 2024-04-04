@@ -51,6 +51,10 @@ h1 {
   text-shadow: 0 0 8px black;
 }
 
+.placeholder {
+  height: 65px;
+}
+
 .play-button:hover {
   background-color: yellow;
   color: rgb(0, 100, 52);

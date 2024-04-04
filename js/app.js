@@ -36,6 +36,7 @@ const earningsEl = document.querySelector('.total')
 const yourChipsMsg = document.getElementById('your-chips')
 const resultEl = document.querySelector('.result')
 const playBtn = document.querySelector('.play-button')
+const placeholderEl = document.querySelector('.placeholder')
 
 const dealBtn = document.querySelector('#deal')
 const hitBtn = document.querySelector('#hit')
@@ -66,6 +67,7 @@ function init() {
   disableBtns()
   playBtn.style.display = ''
   resultEl.style.display = 'none'
+  placeholderEl.style.display = 'none'
 }
 
 function handlePlay() {
@@ -80,7 +82,8 @@ function handleWager(e) {
     wagerTotal += btnIdx
     wagerEl.textContent = `$${wagerTotal}`
   }
-  
+  resultEl.style.display = 'none'
+  placeholderEl.style.display = ''
   disableBtns()
 }
 
@@ -106,15 +109,15 @@ function distributeCards() {
   playerCard1.className = `card large ${playerIdx1}`
   setTimeout(() => {
     dealerCard1.className = `card large back`
-  }, 500)
+  }, 600)
   setTimeout(() => {
     playerCard2.className = `card large ${playerIdx2}`
     playerCount.textContent = `${playerTotal}`
-  }, 1000)
+  }, 1200)
   setTimeout(() => {
     dealerCard2.className = `card large ${dealerIdx2}`
     dealerCount.textContent = `${dealerTotal}`
-  }, 1500)
+  }, 1800)
 
   let totals = countTotalFlop(playerIdx1, playerIdx2, dealerIdx2)
   playerTotal = totals[0]
@@ -225,7 +228,7 @@ function handleStay() {
   //flips & adds 1st dealer card
 
   disableBtns()
-  setTimeout(handleDealerTurn, 4000)
+  setTimeout(handleDealerTurn, 3000)
 }
 
 function handleDealerTurn() {
@@ -245,7 +248,7 @@ function handleDealerTurn() {
   
   setTimeout(calculateWinnerAndEarnings, (dHitCount * 750) + 1000)
   turn *= -1
-  setTimeout(reset, (dHitCount * 750) + 2500)
+  setTimeout(reset, (dHitCount * 750) + 3000)
 }
 
 function addHitToTotal(extra, userSum, aces) {
@@ -304,6 +307,8 @@ function addHitToTotal(extra, userSum, aces) {
 }
 
 function calculateWinnerAndEarnings() {
+  resultEl.style.display = ''
+  placeholderEl.style.display = 'none'
   if ((dealerTotal < playerTotal && playerTotal <= 21) || (dealerTotal > 21 && playerTotal <= 21)) {
     totalEarnings += (wagerTotal * 2)
     wagerEl.textContent = `$0`
