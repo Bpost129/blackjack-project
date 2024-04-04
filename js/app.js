@@ -119,6 +119,7 @@ function distributeCards() {
   let totals = countTotalFlop(playerIdx1, playerIdx2, dealerIdx2)
   playerTotal = totals[0]
   dealerTotal = totals[1]
+  //handle for blackjack
 }
 
 function countTotalFlop(p1, p2, d2) {
@@ -235,15 +236,16 @@ function handleDealerTurn() {
     let extraCardEl = document.createElement('div')
     extraCardEl.className = `card large ${extraCard}`
     dealerTotal = addHitToTotal(extraCardIdx, dealerTotal, dAceCount)
+  
     setTimeout(() => {
       dealerCardEl.appendChild(extraCardEl)
       dealerCount.textContent = `${dealerTotal}`
-    }, dHitCount * 1000)
+    }, dHitCount * 750)
   }
   
-  setTimeout(calculateWinnerAndEarnings, 1000)
+  setTimeout(calculateWinnerAndEarnings, (dHitCount * 750) + 1000)
   turn *= -1
-  setTimeout(reset, 3000)
+  setTimeout(reset, (dHitCount * 750) + 2500)
 }
 
 function addHitToTotal(extra, userSum, aces) {
