@@ -173,7 +173,7 @@ function handleHit() {
   extraCardEl.className = `card large ${extraCard}`
   playerCardEl.appendChild(extraCardEl)
   addHitToTotal(extraCardIdx)
-  playerCount.textContent = `${playerTotal}`
+  
   doubleBtn.disabled = true
 }
 
@@ -192,6 +192,8 @@ function addHitToTotal(extra) {
     playerTotal += 10
   }
 
+  
+  playerCount.textContent = `${playerTotal}`
   if (playerTotal >= 21) {
     setTimeout(handleStay, 1000)
   } 
@@ -215,6 +217,7 @@ function addDealerHitToTotal(extra) {
     dealerTotal += 10
   }
 
+  dealerCount.textContent = `${dealerTotal}`
   // if (dealerTotal >= 21) {
   //   setTimeout(handleStay, 1000)
   // } 
@@ -278,11 +281,17 @@ function handleDealerTurn() {
     extraCardEl.className = `card large ${extraCard}`
     dealerCardEl.appendChild(extraCardEl)
     addDealerHitToTotal(extraCardIdx)
-    dealerCount.textContent = `${dealerTotal}`
+    
   }
 
   if ((dealerTotal < playerTotal && playerTotal <= 21) || (dealerTotal > 21 && playerTotal <= 21)) {
     totalEarnings += (wagerTotal * 2)
+    wagerEl.textContent = `$0`
+    earningsEl.textContent = `$${totalEarnings}`
+  } 
+
+  if ((dealerTotal === playerTotal) && (dealerTotal <= 21 && playerTotal <= 21)) {
+    totalEarnings += wagerTotal
     wagerEl.textContent = `$0`
     earningsEl.textContent = `$${totalEarnings}`
   }
