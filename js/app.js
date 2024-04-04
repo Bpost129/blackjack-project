@@ -14,6 +14,7 @@ let dealerTotal = 0
 let hitCount = 0
 let dHitCount = 0
 let aceCount = 0
+let dAceCount
 let turn
 
 let playerIdx1, playerIdx2, dealerIdx1, dealerIdx2, gameDeck
@@ -67,10 +68,13 @@ function handleWager(e) {
   wagerEl.textContent = `$${wagerTotal}`
 }
 
+
+
 function handleDeal() {
   totalEarnings -= wagerTotal
   earningsEl.textContent = `$${totalEarnings}`
 
+  //should be done before deal is pressed vvv
   while (hitCount > 0) {
     playerCardEl.removeChild(playerCardEl.lastChild)
     hitCount--
@@ -80,9 +84,10 @@ function handleDeal() {
     dHitCount--
   }
   aceCount = 0
-
+  
   playerCount.textContent = `0`
   dealerCount.textContent = `0`
+  //should be done before deal is pressed ^^^
   distributeCards()
 
   if (playerTotal >= 21) {
@@ -120,6 +125,7 @@ function countTotalFlop(p1, p2, d1, d2) {
   if (!faces.includes(p1.substring(1)) && p1.substring(1) !== 'A') {
     pTotal += parseInt(p1.substring(1))
   } else if (!faces.includes(p1.substring(1)) && p1.substring(1) === 'A'){
+    aceCount++
     pTotal += 11
   } else {
     pTotal += 10
@@ -153,6 +159,7 @@ function countTotalFlop(p1, p2, d1, d2) {
   if (!faces.includes(d2.substring(1)) && d2.substring(1) !== 'A') {
     dTotal += parseInt(d2.substring(1))
   } else if (!faces.includes(d2.substring(1)) && d2.substring(1) === 'A') {
+    dAceCount++
     if ((dTotal + 11) > 21) {
       dTotal += 1
     } else {
@@ -177,55 +184,6 @@ function handleHit() {
   doubleBtn.disabled = true
 }
 
-function addHitToTotal(extra) {
-  //refactor to use for dealer as well
-  if (!faces.includes(extra) && extra !== 'A') {
-    playerTotal += parseInt(extra)
-  } else if (!faces.includes(extra) && extra === 'A'){
-
-    if ((playerTotal + 11) > 21) {
-      playerTotal += 1
-    } else {
-      playerTotal += 11
-    }
-  } else {
-    playerTotal += 10
-  }
-
-  
-  playerCount.textContent = `${playerTotal}`
-  if (playerTotal >= 21) {
-    setTimeout(handleStay, 1000)
-  } 
-
-  //  Must test for when cards
-  //  are added after aces
-}
-
-function addDealerHitToTotal(extra) {
-  //refactor to use for dealer as well
-  if (!faces.includes(extra) && extra !== 'A') {
-    dealerTotal += parseInt(extra)
-  } else if (!faces.includes(extra) && extra === 'A'){
-
-    if ((dealerTotal + 11) > 21) {
-      dealerTotal += 1
-    } else {
-      dealerTotal += 11
-    }
-  } else {
-    dealerTotal += 10
-  }
-
-  dealerCount.textContent = `${dealerTotal}`
-  // if (dealerTotal >= 21) {
-  //   setTimeout(handleStay, 1000)
-  // } 
-
-  //  Must test for when cards
-  //  are added after aces
-}
-
 function handleDouble() {
   hitCount++
   let extraCard = gameDeck.shift()
@@ -239,23 +197,127 @@ function handleDouble() {
 
   extraCardEl.className = `card large ${extraCard} west`
   playerCardEl.appendChild(extraCardEl)
-  addHitToTotal(extraCardIdx)
+  addHitToTotal(extraCardIdx, playerTotal)
   playerCount.textContent = `${playerTotal}`
   setTimeout(handleStay, 1000)
   
 }
 
-
 function handleStay() {
   turn *= -1
-  
-  dealerCard1.className = `card large ${dealerIdx1}`
+  setTimeout(() => {
+    dealerCard1.className = `card large ${dealerIdx1}`
 
-  if (!faces.includes(dealerIdx1.substring(1)) && dealerIdx1.substring(1) !== 'A') {
-    dealerTotal += parseInt(dealerIdx1.substring(1))
-  } else if (!faces.includes(dealerIdx1.substring(1)) && dealerIdx1.substring(1) === 'A') {
+    if (!faces.includes(dealerIdx1.substring(1)) && dealerIdx1.substring(1) !== 'A') {
+      dealerTotal += parseInt(dealerIdx1.substring(1))
+    } else if (!faces.includes(dealerIdx1.substring(1)) && dealerIdx1.substring(1) === 'A') {
+      dAceCount++
+      if ((dealerTotal + 11) > 21) {
+        dealerTotal += 1
+      } else {
+        dealerTotal += 11
+      }
+    } else {
+      dealerTotal += 10
+    }
+  
+    dealerCount.textContent = dealerTotal
+  }, 2000)
+  
+  
+  //changed timing
+
+  disableBtns()
+  setTimeout(handleDealerTurn, 4000)
+}
+
+function addHitToTotal(extra, userSum, aces) {
+  //refactor to use for dealer as well
+  if (aces) {
+    if (!faces.includes(extra) && extra !== 'A') {
+      if (userSum + parseInt(extra) <= 21) {
+        userSum += parseInt(extra)
+      }  else {
+        for (let i = 1; i <= aces; i++) {
+            userSum -= 10
+            userSum += parseInt(extra)
+            if (userSum <= 21) break
+        }
+      }
+    } else if (!faces.includes(extra) && extra === 'A') {
+      if (userSum + 11 <= 21) {
+        userSum += 11
+      } else {
+        for (let i = 1; i <= aces; i++) {
+          userSum -= 10
+          if (userSum + 11 > 21) {
+            userSum += 1
+          } else {
+            userSum += 11
+            break
+          }
+        }
+      }
+    } else {
+      if (userSum + 10 <= 21) {
+        userSum += 10
+      } else {
+        for (let i = 1; i <= aces; i++) {
+          userSum -= 10
+          userSum += 10
+        }
+      }
+    }
+  } else {
+    
+  }
+  
+  if (!faces.includes(extra) && extra !== 'A') {
+    playerTotal += parseInt(extra)
+  } else if (!faces.includes(extra) && extra === 'A'){
+    aceCount++
+    if ((playerTotal + 11) > 21) {
+      playerTotal += 1
+    } else if (aceCount) {
+      for (let i = 1; i <= aceCount; i++) {
+        if (playerTotal + 11 > 21) {
+          playerTotal -= 10
+          if (playerTotal + 11 > 21) {
+            playerTotal += 1
+          }
+        }
+      }
+    } else {
+      playerTotal += 11
+    }
+  } else {
+    playerTotal += 10
+  }
+
+  
+  playerCount.textContent = `${playerTotal}`
+  if (playerTotal >= 21) {
+    setTimeout(handleStay, 1000)
+  } 
+}
+
+function addDealerHitToTotal(extra) {
+  //refactor to use for dealer as well
+  if (!faces.includes(extra) && extra !== 'A') {
+    dealerTotal += parseInt(extra)
+  } else if (!faces.includes(extra) && extra === 'A'){
+    dAceCount++
     if ((dealerTotal + 11) > 21) {
       dealerTotal += 1
+    } else if (dAceCount) {
+      for (let i = 1; i <= dAceCount; i++) {
+        if (dealerTotal + 11 > 21) {
+          dealerTotal -= 10
+          if (dealerTotal + 11 > 21) {
+            dealerTotal += 1
+          }
+        }
+      }
     } else {
       dealerTotal += 11
     }
@@ -263,12 +325,10 @@ function handleStay() {
     dealerTotal += 10
   }
 
-  dealerCount.textContent = dealerTotal
-  
-  //changed timing
-
-  disableBtns()
-  setTimeout(handleDealerTurn, 2000)
+  dealerCount.textContent = `${dealerTotal}`
+  // if (dealerTotal >= 21) {
+  //   setTimeout(handleStay, 1000)
+  // }
 }
 
 function handleDealerTurn() {
