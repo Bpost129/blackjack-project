@@ -6,7 +6,7 @@ const faces = ['J', 'Q', 'K']
 
 /*---------------------------- Variables (state) ----------------------------*/
 let deckCopy = [...fourDecks]
-
+let playedCards = []
 let totalEarnings = 1000
 let wagerTotal = 0
 let playerTotal = 0
@@ -81,13 +81,15 @@ function handleWager(e) {
     const btnIdx = Math.floor(e.target.id.substring(3))
     wagerTotal += btnIdx
     wagerEl.textContent = `$${wagerTotal}`
+    placeholderEl.style.display = ''
   }
   resultEl.style.display = 'none'
-  placeholderEl.style.display = ''
+  
   disableBtns()
 }
 
 function handleDeal() {
+  
   totalEarnings -= wagerTotal
   earningsEl.textContent = `$${totalEarnings}`
   distributeCards()
@@ -97,15 +99,17 @@ function handleDeal() {
   }
 }
 
-//
-//must reshuffle when cards are low
-//
-
 function distributeCards() {
+  if (gameDeck.length < 10) {
+    gameDeck = [...gameDeck, ...playedCards]
+    gameDeck = shuffleDeck(gameDeck)
+    playedCards.length = 0
+  }
   playerIdx1 = gameDeck.shift()
   dealerIdx1 = gameDeck.shift()
   playerIdx2 = gameDeck.shift()
   dealerIdx2 = gameDeck.shift()
+  playedCards.push(playerIdx1, playerIdx2, dealerIdx1, dealerIdx2)
   playerCard1.className = `card large ${playerIdx1}`
   setTimeout(() => {
     dealerCard1.className = `card large back`
@@ -122,7 +126,6 @@ function distributeCards() {
   let totals = countTotalFlop(playerIdx1, playerIdx2, dealerIdx2)
   playerTotal = totals[0]
   dealerTotal = totals[1]
-  //handle for blackjack
 }
 
 function countTotalFlop(p1, p2, d2) {
@@ -315,6 +318,13 @@ function calculateWinnerAndEarnings() {
     earningsEl.textContent = `$${totalEarnings}`
     resultEl.textContent = `Player Wins!`
   } 
+
+  if ((playerTotal === 21 && hitCount === 0) && (dealerTotal !== 21 && dHitCount === 0)) {
+    totalEarnings += (wagerTotal * 3/2)
+    wagerEl.textContent = `$0`
+    earningsEl.textContent = `$${totalEarnings}`
+    resultEl.textContent = `Blackjack!`
+  }
 
   if ((dealerTotal === playerTotal) && (dealerTotal <= 21 && playerTotal <= 21)) {
     totalEarnings += wagerTotal
