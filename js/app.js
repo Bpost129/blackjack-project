@@ -34,6 +34,7 @@ const wagerEl = document.querySelector('.wager-display')
 
 const earningsEl = document.querySelector('.total')
 const yourChipsMsg = document.getElementById('your-chips')
+const resultEl = document.querySelector('.result')
 
 const dealBtn = document.querySelector('#deal')
 const hitBtn = document.querySelector('#hit')
@@ -179,8 +180,12 @@ function handleHit() {
   let extraCardEl = document.createElement('div')
   extraCardEl.className = `card large ${extraCard}`
   playerCardEl.appendChild(extraCardEl)
-  addHitToTotal(extraCardIdx)
+  playerTotal = addHitToTotal(extraCardIdx, playerTotal, aceCount)
   
+  playerCount.textContent = `${playerTotal}`
+  if (playerTotal >= 21) {
+    setTimeout(handleStay, 1000)
+  } 
   doubleBtn.disabled = true
 }
 
@@ -197,7 +202,7 @@ function handleDouble() {
 
   extraCardEl.className = `card large ${extraCard} west`
   playerCardEl.appendChild(extraCardEl)
-  addHitToTotal(extraCardIdx, playerTotal)
+  playerTotal = addHitToTotal(extraCardIdx, playerTotal, aceCount)
   playerCount.textContent = `${playerTotal}`
   setTimeout(handleStay, 1000)
   
@@ -223,16 +228,12 @@ function handleStay() {
   
     dealerCount.textContent = dealerTotal
   }, 2000)
-  
-  
-  //changed timing
 
   disableBtns()
   setTimeout(handleDealerTurn, 4000)
 }
 
 function addHitToTotal(extra, userSum, aces) {
-  //refactor to use for dealer as well
   if (aces) {
     if (!faces.includes(extra) && extra !== 'A') {
       if (userSum + parseInt(extra) <= 21) {
@@ -245,6 +246,7 @@ function addHitToTotal(extra, userSum, aces) {
         }
       }
     } else if (!faces.includes(extra) && extra === 'A') {
+      aces++
       if (userSum + 11 <= 21) {
         userSum += 11
       } else {
@@ -269,67 +271,56 @@ function addHitToTotal(extra, userSum, aces) {
       }
     }
   } else {
-    
-  }
-  
-  if (!faces.includes(extra) && extra !== 'A') {
-    playerTotal += parseInt(extra)
-  } else if (!faces.includes(extra) && extra === 'A'){
-    aceCount++
-    if ((playerTotal + 11) > 21) {
-      playerTotal += 1
-    } else if (aceCount) {
-      for (let i = 1; i <= aceCount; i++) {
-        if (playerTotal + 11 > 21) {
-          playerTotal -= 10
-          if (playerTotal + 11 > 21) {
-            playerTotal += 1
-          }
-        }
+    if (!faces.includes(extra) && extra !== 'A') {
+      userSum += parseInt(extra)
+    } else if (!faces.includes(extra) && extra === 'A'){
+      aces++
+      if ((userSum + 11) > 21) {
+        userSum += 1
+      } else {
+        userSum += 11
       }
     } else {
-      playerTotal += 11
+      userSum += 10
     }
-  } else {
-    playerTotal += 10
   }
-
   
-  playerCount.textContent = `${playerTotal}`
-  if (playerTotal >= 21) {
-    setTimeout(handleStay, 1000)
-  } 
-}
-
-function addDealerHitToTotal(extra) {
-  //refactor to use for dealer as well
-  if (!faces.includes(extra) && extra !== 'A') {
-    dealerTotal += parseInt(extra)
-  } else if (!faces.includes(extra) && extra === 'A'){
-    dAceCount++
-    if ((dealerTotal + 11) > 21) {
-      dealerTotal += 1
-    } else if (dAceCount) {
-      for (let i = 1; i <= dAceCount; i++) {
-        if (dealerTotal + 11 > 21) {
-          dealerTotal -= 10
-          if (dealerTotal + 11 > 21) {
-            dealerTotal += 1
-          }
-        }
-      }
-    } else {
-      dealerTotal += 11
-    }
-  } else {
-    dealerTotal += 10
-  }
-
-  dealerCount.textContent = `${dealerTotal}`
-  // if (dealerTotal >= 21) {
+  return userSum
+  // playerCount.textContent = `${playerTotal}`
+  // if (playerTotal >= 21) {
   //   setTimeout(handleStay, 1000)
-  // }
+  // } 
 }
+
+// function addDealerHitToTotal(extra) {
+//   //refactor to use for dealer as well
+//   if (!faces.includes(extra) && extra !== 'A') {
+//     dealerTotal += parseInt(extra)
+//   } else if (!faces.includes(extra) && extra === 'A'){
+//     dAceCount++
+//     if ((dealerTotal + 11) > 21) {
+//       dealerTotal += 1
+//     } else if (dAceCount) {
+//       for (let i = 1; i <= dAceCount; i++) {
+//         if (dealerTotal + 11 > 21) {
+//           dealerTotal -= 10
+//           if (dealerTotal + 11 > 21) {
+//             dealerTotal += 1
+//           }
+//         }
+//       }
+//     } else {
+//       dealerTotal += 11
+//     }
+//   } else {
+//     dealerTotal += 10
+//   }
+
+//   dealerCount.textContent = `${dealerTotal}`
+//   // if (dealerTotal >= 21) {
+//   //   setTimeout(handleStay, 1000)
+//   // }
+// }
 
 function handleDealerTurn() {
   while (dealerTotal < 17) {
@@ -340,7 +331,8 @@ function handleDealerTurn() {
     let extraCardEl = document.createElement('div')
     extraCardEl.className = `card large ${extraCard}`
     dealerCardEl.appendChild(extraCardEl)
-    addDealerHitToTotal(extraCardIdx)
+    dealerTotal = addHitToTotal(extraCardIdx, dealerTotal, dAceCount)
+    dealerCount.textContent = `${dealerTotal}`
     
   }
 
@@ -348,12 +340,20 @@ function handleDealerTurn() {
     totalEarnings += (wagerTotal * 2)
     wagerEl.textContent = `$0`
     earningsEl.textContent = `$${totalEarnings}`
+    resultEl.textContent = `Player Wins!`
   } 
 
   if ((dealerTotal === playerTotal) && (dealerTotal <= 21 && playerTotal <= 21)) {
     totalEarnings += wagerTotal
     wagerEl.textContent = `$0`
     earningsEl.textContent = `$${totalEarnings}`
+    resultEl.textContent = `Push!`
+  }
+
+  if ((dealerTotal > playerTotal && dealerTotal <= 21) || (dealerTotal <= 21 && playerTotal > 21)) {
+    wagerEl.textContent = `$0`
+    earningsEl.textContent = `$${totalEarnings}`
+    resultEl.textContent = `Dealer Wins!`
   }
   
   turn *= -1

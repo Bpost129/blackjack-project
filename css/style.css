@@ -26,6 +26,17 @@ h1 {
   align-items: center;
 }
 
+.result {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+  /* font-size: 32px; */
+  font-size: 3.5vmin;
+  color: yellow;
+  text-shadow: 0 0 8px black;
+}
+
 .dealer-display, .player-display {
   display: flex;
   justify-content: center;
