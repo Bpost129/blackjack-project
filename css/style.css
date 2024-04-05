@@ -36,6 +36,7 @@ h1 {
   text-shadow: 3px 3px 8px black;
   border-radius: 20px;
   box-shadow: 0 0 20px 20px rgba(56, 40, 13, 0.6);
+  /* text-shadow: -5px -5px 10px red; */
   background-color: rgba(56, 40, 13, 0.7);
   /* margin-bottom: 125px; */
 }
@@ -59,7 +60,7 @@ h1 {
   text-shadow: 3px 3px 8px black;
 }
 
-.play-button {
+.play-button, .reset-button {
   margin-bottom: 40px;
   width: 350px;
   height: 56px;
