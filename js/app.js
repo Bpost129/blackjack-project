@@ -13,11 +13,16 @@ let playerTotal = 0
 let dealerTotal = 0
 let hitCount = 0
 let dHitCount = 0
-let aceCount = 0
+let aceCount
 let dAceCount
 let turn
 
 let playerIdx1, playerIdx2, dealerIdx1, dealerIdx2, gameDeck
+
+
+//
+//when total earnings reaches 0, enable reset button
+//
 
 /*------------------------ Cached Element References ------------------------*/
 const playerCardEl = document.querySelector('.player-cards')
@@ -37,6 +42,7 @@ const yourChipsMsg = document.getElementById('your-chips')
 const resultEl = document.querySelector('.result')
 const playBtn = document.querySelector('.play-button')
 const placeholderEl = document.querySelector('.placeholder')
+const resetBtn = document.querySelector('.reset-button')
 
 const dealBtn = document.querySelector('#deal')
 const hitBtn = document.querySelector('#hit')
@@ -55,6 +61,7 @@ hitBtn.addEventListener('click', handleHit)
 standBtn.addEventListener('click', handleStand)
 doubleBtn.addEventListener('click', handleDouble)
 playBtn.addEventListener('click', handlePlay)
+resetBtn.addEventListener('click', init)
 
 /*-------------------------------- Functions --------------------------------*/
 
@@ -68,15 +75,26 @@ function init() {
   playBtn.style.display = ''
   resultEl.style.display = 'none'
   placeholderEl.style.display = 'none'
+  resetBtn.style.display = 'none'
+  totalEarnings = 1000
+  
+  wagerTotal = 0
+
+  playerTotal = 0
+  dealerTotal = 0
 }
 
 function handlePlay() {
   turn *= -1
   playBtn.style.display = 'none'
   resultEl.style.display = ''
+  resetBtn.style.display = 'none'
 }
 
 function handleWager(e) {
+  //reset functionality if no more chips
+  // if (totalEarnings === 0)
+
   if (turn === 1) {
     const btnIdx = Math.floor(e.target.id.substring(3))
     wagerTotal += btnIdx
@@ -86,10 +104,14 @@ function handleWager(e) {
   resultEl.style.display = 'none'
   
   disableBtns()
+  hitBtn.disabled = true
+  standBtn.disabled = true
+  doubleBtn.disabled = true
 }
 
 function handleDeal() {
-  
+  disableBtns()
+  disableWagers()
   totalEarnings -= wagerTotal
   earningsEl.textContent = `$${totalEarnings}`
   distributeCards()
@@ -97,6 +119,7 @@ function handleDeal() {
   if (playerTotal >= 21) {
     setTimeout(handleStand, 1000)
   }
+  //blackjack on flop not being handled correctly
 }
 
 function distributeCards() {
@@ -245,9 +268,12 @@ function handleDealerTurn() {
   
     setTimeout(() => {
       dealerCardEl.appendChild(extraCardEl)
-      dealerCount.textContent = `${dealerTotal}`
     }, dHitCount * 750)
   }
+
+  setTimeout(() => {
+    dealerCount.textContent = `${dealerTotal}`
+  }, dHitCount * 750)
   
   setTimeout(calculateWinnerAndEarnings, (dHitCount * 750) + 1000)
   turn *= -1
@@ -312,12 +338,6 @@ function addHitToTotal(extra, userSum, aces) {
 function calculateWinnerAndEarnings() {
   resultEl.style.display = ''
   placeholderEl.style.display = 'none'
-  if ((dealerTotal < playerTotal && playerTotal <= 21) || (dealerTotal > 21 && playerTotal <= 21)) {
-    totalEarnings += (wagerTotal * 2)
-    wagerEl.textContent = `$0`
-    earningsEl.textContent = `$${totalEarnings}`
-    resultEl.textContent = `Player Wins!`
-  } 
 
   if ((playerTotal === 21 && hitCount === 0) && (dealerTotal !== 21 && dHitCount === 0)) {
     totalEarnings += (wagerTotal * 3/2)
@@ -325,6 +345,20 @@ function calculateWinnerAndEarnings() {
     earningsEl.textContent = `$${totalEarnings}`
     resultEl.textContent = `Blackjack!`
   }
+
+  if ((dealerTotal < playerTotal && playerTotal <= 21) || (dealerTotal > 21 && playerTotal <= 21)) {
+    totalEarnings += (wagerTotal * 2)
+    wagerEl.textContent = `$0`
+    earningsEl.textContent = `$${totalEarnings}`
+    resultEl.textContent = `Player Wins!`
+  } 
+
+  // if ((playerTotal === 21 && hitCount === 0) && (dealerTotal !== 21 && dHitCount === 0)) {
+  //   totalEarnings += (wagerTotal * 3/2)
+  //   wagerEl.textContent = `$0`
+  //   earningsEl.textContent = `$${totalEarnings}`
+  //   resultEl.textContent = `Blackjack!`
+  // }
 
   if ((dealerTotal === playerTotal) && (dealerTotal <= 21 && playerTotal <= 21)) {
     totalEarnings += wagerTotal
@@ -381,6 +415,17 @@ function disableBtns() {
       btn.disabled = false
     })
   }
+}
+
+function disableWagers() {
+  wagerBtns.forEach(btn => {
+    if (btn.disabled === true) {
+      btn.disabled = false
+    } else {
+      btn.disabled = true
+    }
+    
+  })
 }
 
 // basically copied from memory-game 
