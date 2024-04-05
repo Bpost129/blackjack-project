@@ -97,8 +97,8 @@ function handleWager(e) {
     if (wagerTotal < totalEarnings && (wagerTotal + btnIdx) <= totalEarnings) {
       wagerTotal += btnIdx
       wagerEl.textContent = `$${wagerTotal}`
-      placeholderEl.style.display = 'none'
-      resetBtn.style.display = ''
+      placeholderEl.style.display = ''
+      resetBtn.style.display = 'none'/* change back to '' */
     }
   }
   
@@ -214,7 +214,7 @@ function handleDealerTurn() {
     turn *= -1
     disableBtns()
     resultEl.style.display = 'none'
-    resetBtn.style.display = ''
+    resetBtn.style.display = 'none' /* change back to '' */
   }
 }
 
