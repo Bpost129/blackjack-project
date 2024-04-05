@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poller+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/cardstarter.css">
   <link rel="stylesheet" href="./css/style.css">
   <script defer src="./js/app.js"></script>
@@ -19,52 +19,52 @@
   <title>Blackjack-BP</title>
 </head>
 <body>
-  <h1>Blackjack</h1>
-
-  <div class="card-display">
-    <div class="dealer-display">
-      <div class="dealer-cards">
-        <div class="card large outline" id="dealer-card-1"></div>
-        <div class="card large outline" id="dealer-card-2"></div>
+  <div class="game">
+    <h1>Wild West Blackjack</h1>
+    <div class="card-display">
+      <div class="dealer-display">
+        <div class="dealer-cards">
+          <div class="card large outline" id="dealer-card-1"></div>
+          <div class="card large outline" id="dealer-card-2"></div>
+        </div>
+        <div class="dealer-count">0</div>
       </div>
-      <div class="dealer-count">0</div>
-    </div>
-    <div class="result">Place Your Bet</div>
-    <button class="play-button">PLAY</button>
-    <div class="placeholder"></div>
-    <div class="player-display">
-      <div class="player-cards">
-        <div class="card large outline" id="player-card-1"></div>
-        <div class="card large outline" id="player-card-2"></div>
-      </div>
-      <div class="player-count">0</div>
-    </div>
-  </div>
-
-  <div class="betting-section">
-    <div class="wagers">
-      <div class="wager-display">$0</div>
-      <div class="wager-buttons">
-        <button class="chips" id="bet01">$1</button>
-        <button class="chips" id="bet05">$5</button>
-        <button class="chips" id="bet10">$10</button>
-        <button class="chips" id="bet25">$25</button>
-        <button class="chips" id="bet50">$50</button>
-      </div>
-    </div>
-    <div class="total-display">
-      <div class="total"></div>
-      <p id="your-chips">Your Chips</p>
-    </div>
-    <div class="actions">
-      <div class="action-buttons">
-        <button class="play" id="deal">Deal</button>
-        <button class="play" id="hit">Hit</button>
-        <button class="play" id="stay">Stay</button>
-        <button class="play" id="double">Double</button>
+      <div class="result">Place Your Bet</div>
+      <button class="play-button">PLAY</button>
+      <div class="placeholder"></div>
+      <div class="player-display">
+        <div class="player-cards">
+          <div class="card large outline" id="player-card-1"></div>
+          <div class="card large outline" id="player-card-2"></div>
+        </div>
+        <div class="player-count">0</div>
       </div>
     </div>
 
+    <div class="betting-section">
+      <div class="wagers">
+        <div class="wager-display">$0</div>
+        <div class="wager-buttons">
+          <button class="chips" id="bet01">$1</button>
+          <button class="chips" id="bet05">$5</button>
+          <button class="chips" id="bet10">$10</button>
+          <button class="chips" id="bet25">$25</button>
+          <button class="chips" id="bet50">$50</button>
+        </div>
+      </div>
+      <div class="total-display">
+        <div class="total"></div>
+        <p id="your-chips">Your Chips</p>
+      </div>
+      <div class="actions">
+        <div class="action-buttons">
+          <button class="play" id="deal">Deal</button>
+          <button class="play" id="hit">Hit</button>
+          <button class="play" id="stand">Stand</button>
+          <button class="play" id="double">Double</button>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 </html>

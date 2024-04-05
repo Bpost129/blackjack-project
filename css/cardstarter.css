@@ -311,7 +311,9 @@
   background-image: url("../images/jokers/joker-red.svg"); }
 
 .card.back {
-  background-image: url("../images/backs/red.svg"); }
+  background-image: url("../images/backs/cowboy-back.png"); 
+  background-size: cover;
+}
 
 .card.back-blue {
   background-image: url("../images/backs/blue.svg"); }

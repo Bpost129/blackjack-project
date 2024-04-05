@@ -40,7 +40,7 @@ const placeholderEl = document.querySelector('.placeholder')
 
 const dealBtn = document.querySelector('#deal')
 const hitBtn = document.querySelector('#hit')
-const stayBtn = document.querySelector('#stay')
+const standBtn = document.querySelector('#stand')
 const doubleBtn = document.querySelector('#double')
 
 earningsEl.textContent = `$${totalEarnings}`
@@ -52,7 +52,7 @@ wagerBtns.forEach(wagerBtn => {
 })
 dealBtn.addEventListener('click', handleDeal)
 hitBtn.addEventListener('click', handleHit)
-stayBtn.addEventListener('click', handleStay)
+standBtn.addEventListener('click', handleStand)
 doubleBtn.addEventListener('click', handleDouble)
 playBtn.addEventListener('click', handlePlay)
 
@@ -95,7 +95,7 @@ function handleDeal() {
   distributeCards()
 
   if (playerTotal >= 21) {
-    setTimeout(handleStay, 1000)
+    setTimeout(handleStand, 1000)
   }
 }
 
@@ -184,7 +184,7 @@ function handleHit() {
   
   playerCount.textContent = `${playerTotal}`
   if (playerTotal >= 21) {
-    setTimeout(handleStay, 1000)
+    setTimeout(handleStand, 1000)
   } 
 }
 
@@ -203,10 +203,10 @@ function handleDouble() {
   playerCardEl.appendChild(extraCardEl)
   playerTotal = addHitToTotal(extraCardIdx, playerTotal, aceCount)
   playerCount.textContent = `${playerTotal}`
-  setTimeout(handleStay, 1000)
+  setTimeout(handleStand, 1000)
 }
 
-function handleStay() {
+function handleStand() {
   turn *= -1
 
   //flips & adds 1st dealer card
@@ -367,7 +367,7 @@ function disableBtns() {
   if (turn !== 1) {
     dealBtn.disabled = true
     hitBtn.disabled = true
-    stayBtn.disabled = true
+    standBtn.disabled = true
     doubleBtn.disabled = true
     wagerBtns.forEach(btn => {
       btn.disabled = true
@@ -375,7 +375,7 @@ function disableBtns() {
   } else {
     dealBtn.disabled = false
     hitBtn.disabled = false
-    stayBtn.disabled = false
+    standBtn.disabled = false
     doubleBtn.disabled = false
     wagerBtns.forEach(btn => {
       btn.disabled = false

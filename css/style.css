@@ -1,20 +1,42 @@
 body {
-  /* background-image: url('../images/chips/blackjack.png'); */
-  background-color: rgb(0, 118, 58);
+  background-image: url('../images/chips/wild-west.png');
+  /* background-color: rgb(0, 118, 58); */
   /* background-repeat: no-repeat; */
   background-size: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  font-family: "Poller One", serif ;
+  justify-content: center;
+  font-family: "Alfa Slab One", serif ;
+  margin: 35px 55px;
   /* padding: 50px; */
   
 }
 
+.game {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  
+  height: 100%;
+  width: 100%;
+
+  border: 4px solid rgb(251, 213, 124);
+  border-radius: 30px;
+  background-color: rgba(105, 85, 39, 0.6);
+}
+
 h1 {
-  font-size:10vmin;
-  color: white;
+  font-size:75px;
+  width: 750px;
+  text-align: center;
+  padding: 20px 0;
+  color: yellow;
+  text-shadow: 3px 3px 8px black;
+  border-radius: 20px;
+  box-shadow: 0 0 20px 20px rgba(56, 40, 13, 0.6);
+  background-color: rgba(56, 40, 13, 0.7);
   /* margin-bottom: 125px; */
 }
 
@@ -34,7 +56,7 @@ h1 {
   /* font-size: 32px; */
   font-size: 3.5vmin;
   color: yellow;
-  text-shadow: 0 0 8px black;
+  text-shadow: 3px 3px 8px black;
 }
 
 .play-button {
@@ -43,12 +65,12 @@ h1 {
   height: 56px;
   font-size: 3.2vmin;
   font-weight: 700;
-  background-color: rgb(0, 100, 52);
+  background-color: rgb(56, 40, 13);
   color: yellow;
   border-radius: 8px;
   border: 4px solid black;
-  box-shadow: 2px 2px 5px black;
-  text-shadow: 0 0 8px black;
+  box-shadow: 3px 3px 2px black;
+  text-shadow: 3px 3px 8px black;
 }
 
 .placeholder {
@@ -56,9 +78,10 @@ h1 {
 }
 
 .play-button:hover {
-  background-color: yellow;
-  color: rgb(0, 100, 52);
-  text-shadow: none;
+  border: 4px solid red;
+  box-shadow: 3px 3px 2px red;
+  color: red;
+  /* background-color: rgb(170, 133, 73); */
 }
 
 .dealer-display, .player-display {
@@ -70,7 +93,7 @@ h1 {
 .dealer-count, .player-count {
   font-size: 4.8vmin;
   color: white;
-  background-color: rgba(0, 0, 0, .3);
+  background-color: rgba(0, 0, 0, .4);
   border-radius: 20px;
   padding: 12px;
   margin-left: 15px;
@@ -83,8 +106,9 @@ h1 {
   flex-wrap: wrap;
   align-items: center;
   width: 100%;
-  margin: 10px 15px;
-  
+  margin: 10px 15px 0 15px;
+  background-color: rgba(56, 40, 13, 0.7);
+  border-radius: 0 0 30px 30px;
 }
 
 .wagers {
@@ -99,7 +123,8 @@ h1 {
 .wager-display {
   font-size: 4.8vmin;
   color: white;
-  background-color: rgba(0, 0, 0, .3);
+  /* background-color: rgba(0, 0, 0, .3); */
+  text-shadow: 3px 3px 8px black;
   border-radius: 20px;
   padding: 12px;
   margin-bottom: 8px;
@@ -159,7 +184,8 @@ h1 {
 
 .total {
   color: rgb(255, 255, 255);
-  background-color: rgba(0, 0, 0, 0.3);
+  /* background-color: rgba(0, 0, 0, 0.3); */
+  text-shadow: 3px 3px 8px black;
   border-radius: 20px;
   font-size: 4.8vmin;
   padding: 12px;
@@ -168,7 +194,7 @@ h1 {
 #your-chips {
   font-size: 3.7vmin;
   color: yellow;
-  text-shadow: 0 0 8px black;
+  text-shadow: 3px 3px 8px black;
 
 }
 
@@ -185,8 +211,10 @@ h1 {
   font-family:inherit;
   width: 22vmin;
   height: 7.7vmin;
-  color: black;
-  background-color: rgb(0, 252, 252);
+  color: whitesmoke;
+  text-shadow: 0 0 6px black;
+  background-color: rgb(170, 133, 73);
+  
   margin: 8px;
   padding: 2.5vmin;
   border-radius: 60px;
@@ -198,11 +226,12 @@ h1 {
 
 .play:hover {
   border: 8px outset red;
+  box-shadow: 3px 3px 3px black;
 }
 
 .chips:hover{
-  border: 3px solid rgba(0, 0, 0);
-  box-shadow: 0 0 12px black;
+  border: 3px solid yellow;
+  box-shadow: 0 0 12px yellow;
 }
 
 /* .play:active:hover {
