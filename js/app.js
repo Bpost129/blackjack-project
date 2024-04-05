@@ -110,16 +110,16 @@ function distributeCards() {
   playerIdx2 = gameDeck.shift()
   dealerIdx2 = gameDeck.shift()
   playedCards.push(playerIdx1, playerIdx2, dealerIdx1, dealerIdx2)
-  playerCard1.className = `card large ${playerIdx1}`
+  playerCard1.className = `card large ${playerIdx1} animate__animated animate__fadeInTopRight`
   setTimeout(() => {
-    dealerCard1.className = `card large back`
+    dealerCard1.className = `card large back animate__animated animate__fadeInTopRight`
   }, 600)
   setTimeout(() => {
-    playerCard2.className = `card large ${playerIdx2}`
+    playerCard2.className = `card large ${playerIdx2} animate__animated animate__fadeInTopRight`
     playerCount.textContent = `${playerTotal}`
   }, 1200)
   setTimeout(() => {
-    dealerCard2.className = `card large ${dealerIdx2}`
+    dealerCard2.className = `card large ${dealerIdx2} animate__animated animate__fadeInTopRight`
     dealerCount.textContent = `${dealerTotal}`
   }, 1800)
 
