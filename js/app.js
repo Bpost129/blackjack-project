@@ -7,22 +7,11 @@ const faces = ['J', 'Q', 'K']
 /*---------------------------- Variables (state) ----------------------------*/
 let deckCopy = [...fourDecks]
 let playedCards = []
-let totalEarnings 
-let wagerTotal
-let playerTotal
-let dealerTotal
 let hitCount = 0
 let dHitCount = 0
-let aceCount
-let dAceCount
-let turn
 
-let playerIdx1, playerIdx2, dealerIdx1, dealerIdx2, gameDeck
-
-
-//
-//when total earnings reaches 0, enable reset button
-//
+let totalEarnings, wagerTotal, playerTotal, dealerTotal, aceCount, dAceCount
+let turn, playerIdx1, playerIdx2, dealerIdx1, dealerIdx2, gameDeck
 
 /*------------------------ Cached Element References ------------------------*/
 const playerCardEl = document.querySelector('.player-cards')
@@ -351,7 +340,7 @@ function calculateWinnerAndEarnings() {
   placeholderEl.style.display = 'none'
   resetBtn.style.display = 'none'/*change back to none */
 
-  if ((playerTotal === 21 && hitCount === 0) && (dealerTotal !== 21 && dHitCount === 0)) {
+  if ((playerTotal === 21 && hitCount === 0) && ((dealerTotal !== 21 && dHitCount === 0) || (dealerTotal !== 21 && dHitCount))) {
     totalEarnings += (wagerTotal * 3/2)
     wagerEl.textContent = `$0`
     earningsEl.textContent = `$${totalEarnings}`
