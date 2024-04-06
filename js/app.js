@@ -7,10 +7,10 @@ const faces = ['J', 'Q', 'K']
 /*---------------------------- Variables (state) ----------------------------*/
 let deckCopy = [...fourDecks]
 let playedCards = []
-let totalEarnings = 1000
-let wagerTotal = 0
-let playerTotal = 0
-let dealerTotal = 0
+let totalEarnings 
+let wagerTotal
+let playerTotal
+let dealerTotal
 let hitCount = 0
 let dHitCount = 0
 let aceCount
@@ -49,7 +49,7 @@ const hitBtn = document.querySelector('#hit')
 const standBtn = document.querySelector('#stand')
 const doubleBtn = document.querySelector('#double')
 
-earningsEl.textContent = `$${totalEarnings}`
+
 
 /*----------------------------- Event Listeners -----------------------------*/
 
@@ -77,11 +77,10 @@ function init() {
   placeholderEl.style.display = 'none'
   resetBtn.style.display = 'none'
   totalEarnings = 1000
-  
-  wagerTotal = 0
-
   playerTotal = 0
   dealerTotal = 0
+  earningsEl.textContent = `$${totalEarnings}`
+  render()
 }
 
 function handlePlay() {
@@ -97,8 +96,8 @@ function handleWager(e) {
     if (wagerTotal < totalEarnings && (wagerTotal + btnIdx) <= totalEarnings) {
       wagerTotal += btnIdx
       wagerEl.textContent = `$${wagerTotal}`
-      placeholderEl.style.display = ''
-      resetBtn.style.display = 'none'/* change back to '' */
+      placeholderEl.style.display = 'none'
+      resetBtn.style.display = ''/* change back to '' */
     }
   }
   
@@ -214,7 +213,7 @@ function handleDealerTurn() {
     turn *= -1
     disableBtns()
     resultEl.style.display = 'none'
-    resetBtn.style.display = 'none' /* change back to '' */
+    resetBtn.style.display = '' /* change back to '' */
   }
 }
 
@@ -350,7 +349,7 @@ function addHitToTotal(extra, userSum, aces) {
 function calculateWinnerAndEarnings() {
   resultEl.style.display = ''
   placeholderEl.style.display = 'none'
-  resetBtn.style.display = 'none'
+  resetBtn.style.display = 'none'/*change back to none */
 
   if ((playerTotal === 21 && hitCount === 0) && (dealerTotal !== 21 && dHitCount === 0)) {
     totalEarnings += (wagerTotal * 3/2)
@@ -373,7 +372,7 @@ function calculateWinnerAndEarnings() {
     resultEl.textContent = `Dealer Wins!`
   } else {
     wagerEl.textContent = `$0`
-    earningsEl.textContent = `${totalEarnings}`
+    earningsEl.textContent = `$${totalEarnings}`
     resultEl.textContent = `Bust!`
   }
 }
@@ -393,7 +392,13 @@ function render() {
   
   playerCount.textContent = `0`
   dealerCount.textContent = `0`
-  resultEl.textContent = `Place Your Bet`
+  if (totalEarnings === 0) {
+    resultEl.style.display = 'none'
+    resetBtn.style.display = ''
+  } else {
+    resultEl.textContent = `Place Your Bet`
+  }
+  
   wagerEl.textContent = `$${wagerTotal}`
   playerCard1.className = `card large outline`
   dealerCard1.className = `card large outline`
