@@ -329,7 +329,7 @@
 .card.west,
 .card.W {
   transform: rotate(90deg);
-  margin: auto 0.75em; }
+  margin: 0 0.75em 1.25em 0.75em; }
   .card.west.shadow,
   .card.W.shadow {
     box-shadow: 2px -2px 3px 0 rgba(41, 41, 41, 0.75); }
