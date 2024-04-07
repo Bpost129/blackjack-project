@@ -14,6 +14,7 @@ body {
   
 }
 
+
 .game {
   display: flex;
   flex-direction: column;
@@ -26,6 +27,19 @@ body {
   border: 4px solid rgb(251, 213, 124);
   border-radius: 30px;
   background-color: rgba(105, 85, 39, 0.6);
+}
+
+.main {
+  display: flex;
+  width: 100%;
+}
+
+.left-main {
+  margin: 120px 50px 50px 100px;
+  transform: rotateY(0deg) rotate(-20deg);
+}
+.right-main {
+  margin: 50px 0 50px 120px;
 }
 
 h1 {
@@ -88,17 +102,19 @@ h1 {
 
 .dealer-display, .player-display {
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 
 .dealer-count, .player-count {
   font-size: 4.8vmin;
+  height: 76px;
+  width: 80px;
+  text-align: center;
   color: white;
   background-color: rgba(0, 0, 0, .4);
   border-radius: 20px;
   padding: 12px;
-  margin-left: 15px;
+  margin: 0 15px;
 }
 
 

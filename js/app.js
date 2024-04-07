@@ -132,7 +132,7 @@ function handleHit() {
   let extraCard = gameDeck.shift()
   let extraCardIdx = extraCard.substring(1)
   let extraCardEl = document.createElement('div')
-  extraCardEl.className = `card large ${extraCard}`
+  extraCardEl.className = `card xlarge ${extraCard}`
   playerCardEl.appendChild(extraCardEl)
   dealSound.play()
 
@@ -155,7 +155,7 @@ function handleDouble() {
     wagerEl.textContent = `$${wagerTotal}`
     earningsEl.textContent = `$${totalEarnings}`
   
-    extraCardEl.className = `card large ${extraCard} west`
+    extraCardEl.className = `card xlarge ${extraCard} west`
     playerCardEl.appendChild(extraCardEl)
     dealSound.play()
     playerTotal = addHitToTotal(extraCardIdx, playerTotal, aceCount)
@@ -172,7 +172,7 @@ function handleStand() {
 
   //flips & adds 1st dealer card
   setTimeout(() => {
-    dealerCard1.className = `card large ${dealerIdx1}`
+    dealerCard1.className = `card xlarge ${dealerIdx1}`
     dealSound.play()
 
     if (!faces.includes(dealerIdx1.substring(1)) && dealerIdx1.substring(1) !== 'A') {
@@ -202,7 +202,7 @@ function handleDealerTurn() {
     let extraCard = gameDeck.shift()
     let extraCardIdx = extraCard.substring(1)
     let extraCardEl = document.createElement('div')
-    extraCardEl.className = `card large ${extraCard}`
+    extraCardEl.className = `card xlarge ${extraCard}`
     dealerTotal = addHitToTotal(extraCardIdx, dealerTotal, dAceCount)
   
     setTimeout(() => {
@@ -241,19 +241,19 @@ function distributeCards() {
   playerIdx2 = gameDeck.shift()
   dealerIdx2 = gameDeck.shift()
   playedCards.push(playerIdx1, playerIdx2, dealerIdx1, dealerIdx2)
-  playerCard1.className = `card large ${playerIdx1}` /*animate__animated animate__fadeInTopRight`*/
+  playerCard1.className = `card xlarge ${playerIdx1}` /*animate__animated animate__fadeInTopRight`*/
   dealSound.play()
   setTimeout(() => {
-    dealerCard1.className = `card large back` /*animate__animated animate__fadeInTopRight`*/
+    dealerCard1.className = `card xlarge back` /*animate__animated animate__fadeInTopRight`*/
     dealSound.play()
   }, 600)
   setTimeout(() => {
-    playerCard2.className = `card large ${playerIdx2}` /*animate__animated animate__fadeInTopRight`*/
+    playerCard2.className = `card xlarge ${playerIdx2}` /*animate__animated animate__fadeInTopRight`*/
     dealSound.play()
     playerCount.textContent = `${playerTotal}`
   }, 1200)
   setTimeout(() => {
-    dealerCard2.className = `card large ${dealerIdx2}` /*animate__animated animate__fadeInTopRight`*/
+    dealerCard2.className = `card xlarge ${dealerIdx2}` /*animate__animated animate__fadeInTopRight`*/
     dealSound.play()
     dealerCount.textContent = `${dealerTotal}`
   }, 1800)
@@ -423,10 +423,10 @@ function render() {
   }
   
   wagerEl.textContent = `$${wagerTotal}`
-  playerCard1.className = `card large outline`
-  dealerCard1.className = `card large outline`
-  playerCard2.className = `card large outline`
-  dealerCard2.className = `card large outline`
+  playerCard1.className = `card xlarge outline`
+  dealerCard1.className = `card xlarge outline`
+  playerCard2.className = `card xlarge outline`
+  dealerCard2.className = `card xlarge outline`
 }
 
 function reset() {
