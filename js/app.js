@@ -38,7 +38,16 @@ const hitBtn = document.querySelector('#hit')
 const standBtn = document.querySelector('#stand')
 const doubleBtn = document.querySelector('#double')
 
-
+const dealSound = new Audio('../sounds/deal.ogg')
+const pokerChips = new Audio('../sounds/poker_chips.wav')
+const reload = new Audio('../sounds/reload.wav')
+const shot = new Audio('../sounds/shot2.wav')
+const blackjack = new Audio('../sounds/blackjack.mp3')
+dealSound.volume = .6
+pokerChips.volume = .6
+reload.volume = .5
+shot.volume = .5
+blackjack.volume = .5
 
 /*----------------------------- Event Listeners -----------------------------*/
 
@@ -50,7 +59,7 @@ hitBtn.addEventListener('click', handleHit)
 standBtn.addEventListener('click', handleStand)
 doubleBtn.addEventListener('click', handleDouble)
 playBtn.addEventListener('click', handlePlay)
-resetBtn.addEventListener('click', init)
+resetBtn.addEventListener('click', reset)
 
 /*-------------------------------- Functions --------------------------------*/
 
@@ -77,6 +86,7 @@ function handlePlay() {
   playBtn.style.display = 'none'
   resultEl.style.display = ''
   resetBtn.style.display = 'none'
+  shot.play()
 }
 
 function handleWager(e) {
@@ -85,6 +95,7 @@ function handleWager(e) {
     if (wagerTotal < totalEarnings && (wagerTotal + btnIdx) <= totalEarnings) {
       wagerTotal += btnIdx
       wagerEl.textContent = `$${wagerTotal}`
+      pokerChips.play()
       placeholderEl.style.display = 'none'
       resetBtn.style.display = ''/* change back to '' */
     }
@@ -123,6 +134,8 @@ function handleHit() {
   let extraCardEl = document.createElement('div')
   extraCardEl.className = `card large ${extraCard}`
   playerCardEl.appendChild(extraCardEl)
+  dealSound.play()
+
   playerTotal = addHitToTotal(extraCardIdx, playerTotal, aceCount)
   
   playerCount.textContent = `${playerTotal}`
@@ -136,17 +149,22 @@ function handleDouble() {
   let extraCard = gameDeck.shift()
   let extraCardIdx = extraCard.substring(1)
   let extraCardEl = document.createElement('div')
-
-  totalEarnings -= wagerTotal
-  wagerTotal *= 2
-  wagerEl.textContent = `$${wagerTotal}`
-  earningsEl.textContent = `$${totalEarnings}`
-
-  extraCardEl.className = `card large ${extraCard} west`
-  playerCardEl.appendChild(extraCardEl)
-  playerTotal = addHitToTotal(extraCardIdx, playerTotal, aceCount)
-  playerCount.textContent = `${playerTotal}`
-  setTimeout(handleStand, 1000)
+  if (wagerTotal < totalEarnings && (wagerTotal + wagerTotal) <= totalEarnings) {
+    totalEarnings -= wagerTotal
+    wagerTotal *= 2
+    wagerEl.textContent = `$${wagerTotal}`
+    earningsEl.textContent = `$${totalEarnings}`
+  
+    extraCardEl.className = `card large ${extraCard} west`
+    playerCardEl.appendChild(extraCardEl)
+    dealSound.play()
+    playerTotal = addHitToTotal(extraCardIdx, playerTotal, aceCount)
+    playerCount.textContent = `${playerTotal}`
+    setTimeout(handleStand, 1000)
+  } else {
+    doubleBtn.disabled = true
+  }
+  
 }
 
 function handleStand() {
@@ -155,6 +173,7 @@ function handleStand() {
   //flips & adds 1st dealer card
   setTimeout(() => {
     dealerCard1.className = `card large ${dealerIdx1}`
+    dealSound.play()
 
     if (!faces.includes(dealerIdx1.substring(1)) && dealerIdx1.substring(1) !== 'A') {
       dealerTotal += parseInt(dealerIdx1.substring(1))
@@ -188,6 +207,7 @@ function handleDealerTurn() {
   
     setTimeout(() => {
       dealerCardEl.appendChild(extraCardEl)
+      dealSound.play()
     }, dHitCount * 750)
   }
 
@@ -207,7 +227,10 @@ function handleDealerTurn() {
 }
 
 function distributeCards() {
-  disableWagers()
+  // disableWagers()
+  // wagerBtns.forEach(btn => {
+  //   btn.disabled = true
+  // })
   if (gameDeck.length < 10) {
     gameDeck = [...gameDeck, ...playedCards]
     gameDeck = shuffleDeck(gameDeck)
@@ -218,16 +241,20 @@ function distributeCards() {
   playerIdx2 = gameDeck.shift()
   dealerIdx2 = gameDeck.shift()
   playedCards.push(playerIdx1, playerIdx2, dealerIdx1, dealerIdx2)
-  playerCard1.className = `card large ${playerIdx1} animate__animated animate__fadeInTopRight`
+  playerCard1.className = `card large ${playerIdx1}` /*animate__animated animate__fadeInTopRight`*/
+  dealSound.play()
   setTimeout(() => {
-    dealerCard1.className = `card large back animate__animated animate__fadeInTopRight`
+    dealerCard1.className = `card large back` /*animate__animated animate__fadeInTopRight`*/
+    dealSound.play()
   }, 600)
   setTimeout(() => {
-    playerCard2.className = `card large ${playerIdx2} animate__animated animate__fadeInTopRight`
+    playerCard2.className = `card large ${playerIdx2}` /*animate__animated animate__fadeInTopRight`*/
+    dealSound.play()
     playerCount.textContent = `${playerTotal}`
   }, 1200)
   setTimeout(() => {
-    dealerCard2.className = `card large ${dealerIdx2} animate__animated animate__fadeInTopRight`
+    dealerCard2.className = `card large ${dealerIdx2}` /*animate__animated animate__fadeInTopRight`*/
+    dealSound.play()
     dealerCount.textContent = `${dealerTotal}`
   }, 1800)
 
@@ -339,28 +366,35 @@ function calculateWinnerAndEarnings() {
   resultEl.style.display = ''
   placeholderEl.style.display = 'none'
   resetBtn.style.display = 'none'/*change back to none */
+  
 
   if ((playerTotal === 21 && hitCount === 0) && ((dealerTotal !== 21 && dHitCount === 0) || (dealerTotal !== 21 && dHitCount))) {
     totalEarnings += (wagerTotal * 3/2)
-    wagerEl.textContent = `$0`
+    wagerTotal = 0
+    wagerEl.textContent = `$${wagerTotal}`
     earningsEl.textContent = `$${totalEarnings}`
     resultEl.textContent = `Blackjack!`
+    blackjack.play()
   } else if ((dealerTotal < playerTotal && playerTotal <= 21) || (dealerTotal > 21 && playerTotal <= 21)) {
     totalEarnings += (wagerTotal * 2)
-    wagerEl.textContent = `$0`
+    wagerTotal = 0
+    wagerEl.textContent = `$${wagerTotal}`
     earningsEl.textContent = `$${totalEarnings}`
     resultEl.textContent === `Blackjack!` ? resultEl.textContent = `Blackjack!` : resultEl.textContent = `Player Wins!`
   } else if ((dealerTotal === playerTotal) && (dealerTotal <= 21 && playerTotal <= 21)) {
     totalEarnings += wagerTotal
-    wagerEl.textContent = `$0`
+    wagerTotal = 0
+    wagerEl.textContent = `$${wagerTotal}`
     earningsEl.textContent = `$${totalEarnings}`
     resultEl.textContent = `Push!`
   } else if ((dealerTotal > playerTotal && dealerTotal <= 21) || (dealerTotal <= 21 && playerTotal > 21)) {
-    wagerEl.textContent = `$0`
+    wagerTotal = 0
+    wagerEl.textContent = `$${wagerTotal}`
     earningsEl.textContent = `$${totalEarnings}`
     resultEl.textContent = `Dealer Wins!`
   } else {
-    wagerEl.textContent = `$0`
+    wagerTotal = 0
+    wagerEl.textContent = `$${wagerTotal}`
     earningsEl.textContent = `$${totalEarnings}`
     resultEl.textContent = `Bust!`
   }
@@ -393,6 +427,11 @@ function render() {
   dealerCard1.className = `card large outline`
   playerCard2.className = `card large outline`
   dealerCard2.className = `card large outline`
+}
+
+function reset() {
+  init()
+  reload.play()
 }
 
 function disableBtns() {
