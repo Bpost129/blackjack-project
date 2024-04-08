@@ -1,6 +1,6 @@
 # Wild West Blackjack
 
-<img width="2234" alt="Screenshot 2024-04-05 at 10 17 16 AM" src="https://github.com/Bpost129/blackjack-project/assets/54043400/0af7bf81-6771-414e-a68d-76dbb9304b84">
+<img width="2208" alt="Screenshot 2024-04-07 at 10 02 42 PM" src="https://github.com/Bpost129/blackjack-project/assets/54043400/50560385-b891-4dde-9f46-3428599bc785">
 
 
 <img src="https://img.shields.io/badge/CSS3-1572B6.svg?style=for-the-badge&logo=CSS3&logoColor=white"> <img src="https://img.shields.io/badge/HTML5-E34F26.svg?style=for-the-badge&logo=HTML5&logoColor=white"> <img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=for-the-badge&logo=JavaScript&logoColor=black"> <img src="https://img.shields.io/badge/Git-F05032.svg?style=for-the-badge&logo=Git&logoColor=white">
