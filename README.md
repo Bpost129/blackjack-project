@@ -28,9 +28,11 @@
 - [ ] Animations
 - [ ] Disable wager buttons while playing
 - [ ] Media queries
+- [ ] Add split and insurance features
 - [ ] Mute button
 - [ ] Theme changing button
 - [ ] Payout/rules display
+
 
 ## Credits
 
