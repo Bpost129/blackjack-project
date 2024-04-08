@@ -51,7 +51,7 @@ pokerChips.volume = .6
 reload.volume = .5
 shot.volume = .5
 blackjack.volume = .5
-winner.volume = .4
+winner.volume = .35
 loser.volume = .5
 click.volume = .6
 
@@ -377,7 +377,7 @@ function calculateWinnerAndEarnings() {
     wagerTotal = 0
     wagerEl.textContent = `$${wagerTotal}`
     earningsEl.textContent = `$${totalEarnings}`
-    resultEl.textContent === `Blackjack!` ? resultEl.textContent = `Blackjack!` : resultEl.textContent = `Player Wins!`
+    resultEl.textContent === `Blackjack!` ? resultEl.textContent = `Blackjack!` : resultEl.textContent = `You Win!`
     winner.play()
   } else if ((dealerTotal === playerTotal) && (dealerTotal <= 21 && playerTotal <= 21)) {
     totalEarnings += wagerTotal
