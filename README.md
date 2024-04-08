@@ -14,10 +14,28 @@
 ### Rules:
 1. Press **"PLAY"** to begin
 2. Place a wager of your choosing
-3. Click "DEAL" button to start dealing cards
+3. Click **"DEAL"** button to start dealing cards
 4. Once the cards are dealt, you can..
-    * Click "HIT" to distribute another card
-    * Click "DOUBLE" to double your wager for one more card
-    * Click "STAND" if you don't wish to receive another card
+    * Click **"HIT"** to distribute another card
+    * Click **"DOUBLE"** to double your wager for one more card
+    * Click **"STAND"** if you don't wish to receive another card
 5. Wait for the dealer to flip their cards
 6. (Hopefully) win!
+
+## Ice Box 
+
+- [x] Sound effects
+- [] Animations
+- [] Disable wager buttons while playing
+- [] Media queries
+- [] Mute button
+- [] Theme changing button
+- []
+
+## Credits
+
+Both the [card deck](https://github.com/SEI-Remote/css-card-deck) and [shuffle function](https://github.com/ManliestBen/memory-game) were prepared by THE [@ManliestBen](https://github.com/ManliestBen)
+
+Sound effects provided by [freesound](https://freesound.org/) and [pixabay](https://pixabay.com/sound-effects/)
+
+The wild-west-themed font can be found [here](https://fonts.google.com/specimen/Alfa+Slab+One?query=alfa)
