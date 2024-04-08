@@ -43,11 +43,17 @@ const pokerChips = new Audio('../sounds/poker_chips.wav')
 const reload = new Audio('../sounds/reload.wav')
 const shot = new Audio('../sounds/shot2.wav')
 const blackjack = new Audio('../sounds/blackjack.mp3')
+const winner = new Audio('../sounds/winner2.mp3')
+const loser = new Audio('../sounds/lose.mp3')
+const click = new Audio('../sounds/click.mp3')
 dealSound.volume = .6
 pokerChips.volume = .6
 reload.volume = .5
 shot.volume = .5
 blackjack.volume = .5
+winner.volume = .4
+loser.volume = .5
+click.volume = .6
 
 /*----------------------------- Event Listeners -----------------------------*/
 
@@ -113,10 +119,10 @@ function handleWager(e) {
 
 function handleDeal() {
   disableBtns()
-  
   totalEarnings -= wagerTotal
   earningsEl.textContent = `$${totalEarnings}`
   distributeCards()
+  
   
   if (playerTotal >= 21) {
     setTimeout(handleStand, 1000)
@@ -189,7 +195,7 @@ function handleStand() {
     }
   
     dealerCount.textContent = dealerTotal
-  }, 2000)
+  }, 1000)
   //flips & adds 1st dealer card
 
   disableBtns()
@@ -381,6 +387,7 @@ function calculateWinnerAndEarnings() {
     wagerEl.textContent = `$${wagerTotal}`
     earningsEl.textContent = `$${totalEarnings}`
     resultEl.textContent === `Blackjack!` ? resultEl.textContent = `Blackjack!` : resultEl.textContent = `Player Wins!`
+    winner.play()
   } else if ((dealerTotal === playerTotal) && (dealerTotal <= 21 && playerTotal <= 21)) {
     totalEarnings += wagerTotal
     wagerTotal = 0
@@ -392,6 +399,7 @@ function calculateWinnerAndEarnings() {
     wagerEl.textContent = `$${wagerTotal}`
     earningsEl.textContent = `$${totalEarnings}`
     resultEl.textContent = `Dealer Wins!`
+    loser.play()
   } else {
     wagerTotal = 0
     wagerEl.textContent = `$${wagerTotal}`
