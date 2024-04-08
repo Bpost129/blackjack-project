@@ -16,8 +16,8 @@
 2. Place a wager of your choosing
 3. Click "deal" button to start dealing cards
 4. Once the cards are dealt, you can..
-  * Click "hit" to distribute another card
-  * Click "double" to double your wager for one more card
-  * Click "stand" if you don't wish to receive another card
+    * Click "hit" to distribute another card
+    * Click "double" to double your wager for one more card
+    * Click "stand" if you don't wish to receive another card
 5. Wait for the dealer to flip their cards
 6. (Hopefully) win!
