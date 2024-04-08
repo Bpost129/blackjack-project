@@ -25,12 +25,11 @@
 ## Ice Box 
 
 - [x] Sound effects
-- [] Animations
-- [] Disable wager buttons while playing
-- [] Media queries
-- [] Mute button
-- [] Theme changing button
-- []
+- [ ] Animations
+- [ ] Disable wager buttons while playing
+- [ ] Media queries
+- [ ] Mute button
+- [ ] Theme changing button
 
 ## Credits
 
