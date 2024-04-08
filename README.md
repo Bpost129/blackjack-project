@@ -30,6 +30,7 @@
 - [ ] Media queries
 - [ ] Mute button
 - [ ] Theme changing button
+- [ ] Payout/rules display
 
 ## Credits
 
