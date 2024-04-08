@@ -1,5 +1,5 @@
 /*-------------------------------- Constants --------------------------------*/
-
+// deck copied from card deck css
 const fourDecks = ["dA","dQ","dK","dJ","d10","d09","d08","d07","d06","d05","d04","d03","d02","hA","hQ","hK","hJ","h10","h09","h08","h07","h06","h05","h04","h03","h02","cA","cQ","cK","cJ","c10","c09","c08","c07","c06","c05","c04","c03","c02","sA","sQ","sK","sJ","s10","s09","s08","s07","s06","s05","s04","s03","s02","dA","dQ","dK","dJ","d10","d09","d08","d07","d06","d05","d04","d03","d02","hA","hQ","hK","hJ","h10","h09","h08","h07","h06","h05","h04","h03","h02","cA","cQ","cK","cJ","c10","c09","c08","c07","c06","c05","c04","c03","c02","sA","sQ","sK","sJ","s10","s09","s08","s07","s06","s05","s04","s03","s02","dA","dQ","dK","dJ","d10","d09","d08","d07","d06","d05","d04","d03","d02","hA","hQ","hK","hJ","h10","h09","h08","h07","h06","h05","h04","h03","h02","cA","cQ","cK","cJ","c10","c09","c08","c07","c06","c05","c04","c03","c02","sA","sQ","sK","sJ","s10","s09","s08","s07","s06","s05","s04","s03","s02","dA","dQ","dK","dJ","d10","d09","d08","d07","d06","d05","d04","d03","d02","hA","hQ","hK","hJ","h10","h09","h08","h07","h06","h05","h04","h03","h02","cA","cQ","cK","cJ","c10","c09","c08","c07","c06","c05","c04","c03","c02","sA","sQ","sK","sJ","s10","s09","s08","s07","s06","s05","s04","s03","s02"]
 
 const faces = ['J', 'Q', 'K']
@@ -103,7 +103,7 @@ function handleWager(e) {
       wagerEl.textContent = `$${wagerTotal}`
       pokerChips.play()
       placeholderEl.style.display = 'none'
-      resetBtn.style.display = ''/* change back to '' */
+      resetBtn.style.display = ''
     }
   }
   
@@ -114,7 +114,6 @@ function handleWager(e) {
     standBtn.disabled = true
     doubleBtn.disabled = true
   }
-  
 }
 
 function handleDeal() {
@@ -123,11 +122,9 @@ function handleDeal() {
   earningsEl.textContent = `$${totalEarnings}`
   distributeCards()
   
-  
   if (playerTotal >= 21) {
     setTimeout(handleStand, 1000)
   }
-  //blackjack on flop not being handled correctly
 }
 
 
@@ -141,10 +138,9 @@ function handleHit() {
   extraCardEl.className = `card xlarge ${extraCard}`
   playerCardEl.appendChild(extraCardEl)
   dealSound.play()
-
   playerTotal = addHitToTotal(extraCardIdx, playerTotal, aceCount)
-  
   playerCount.textContent = `${playerTotal}`
+
   if (playerTotal >= 21) {
     setTimeout(handleStand, 1000)
   } 
@@ -155,6 +151,7 @@ function handleDouble() {
   let extraCard = gameDeck.shift()
   let extraCardIdx = extraCard.substring(1)
   let extraCardEl = document.createElement('div')
+
   if (wagerTotal < totalEarnings && (wagerTotal + wagerTotal) <= totalEarnings) {
     totalEarnings -= wagerTotal
     wagerTotal *= 2
@@ -170,13 +167,12 @@ function handleDouble() {
   } else {
     doubleBtn.disabled = true
   }
-  
 }
 
 function handleStand() {
   turn *= -1
 
-  //flips & adds 1st dealer card
+  //flips & adds 1st dealer card vvv
   setTimeout(() => {
     dealerCard1.className = `card xlarge ${dealerIdx1}`
     dealSound.play()
@@ -196,7 +192,7 @@ function handleStand() {
   
     dealerCount.textContent = dealerTotal
   }, 1000)
-  //flips & adds 1st dealer card
+  //flips & adds 1st dealer card ^^^
 
   disableBtns()
   setTimeout(handleDealerTurn, 2000)
@@ -224,42 +220,41 @@ function handleDealerTurn() {
   setTimeout(calculateWinnerAndEarnings, (dHitCount * 750) + 1000)
   turn *= -1
   setTimeout(render, (dHitCount * 750) + 3000)
+
   if (totalEarnings === 0) {
     turn *= -1
     disableBtns()
     resultEl.style.display = 'none'
-    resetBtn.style.display = '' /* change back to '' */
+    resetBtn.style.display = ''
   }
 }
 
 function distributeCards() {
-  // disableWagers()
-  // wagerBtns.forEach(btn => {
-  //   btn.disabled = true
-  // })
+  // disable wager buttons once dealing
   if (gameDeck.length < 10) {
     gameDeck = [...gameDeck, ...playedCards]
     gameDeck = shuffleDeck(gameDeck)
     playedCards.length = 0
   }
+
   playerIdx1 = gameDeck.shift()
   dealerIdx1 = gameDeck.shift()
   playerIdx2 = gameDeck.shift()
   dealerIdx2 = gameDeck.shift()
   playedCards.push(playerIdx1, playerIdx2, dealerIdx1, dealerIdx2)
-  playerCard1.className = `card xlarge ${playerIdx1}` /*animate__animated animate__fadeInTopRight`*/
+  playerCard1.className = `card xlarge ${playerIdx1}`
   dealSound.play()
   setTimeout(() => {
-    dealerCard1.className = `card xlarge back` /*animate__animated animate__fadeInTopRight`*/
+    dealerCard1.className = `card xlarge back`
     dealSound.play()
   }, 600)
   setTimeout(() => {
-    playerCard2.className = `card xlarge ${playerIdx2}` /*animate__animated animate__fadeInTopRight`*/
+    playerCard2.className = `card xlarge ${playerIdx2}`
     dealSound.play()
     playerCount.textContent = `${playerTotal}`
   }, 1200)
   setTimeout(() => {
-    dealerCard2.className = `card xlarge ${dealerIdx2}` /*animate__animated animate__fadeInTopRight`*/
+    dealerCard2.className = `card xlarge ${dealerIdx2}`
     dealSound.play()
     dealerCount.textContent = `${dealerTotal}`
   }, 1800)
@@ -371,8 +366,7 @@ function addHitToTotal(extra, userSum, aces) {
 function calculateWinnerAndEarnings() {
   resultEl.style.display = ''
   placeholderEl.style.display = 'none'
-  resetBtn.style.display = 'none'/*change back to none */
-  
+  resetBtn.style.display = 'none'
 
   if ((playerTotal === 21 && hitCount === 0) && ((dealerTotal !== 21 && dHitCount === 0) || (dealerTotal !== 21 && dHitCount))) {
     totalEarnings += (wagerTotal * 3/2)
@@ -413,16 +407,18 @@ function render() {
     playerCardEl.removeChild(playerCardEl.lastChild)
     hitCount--
   }
+
   while (dHitCount > 0) {
     dealerCardEl.removeChild(dealerCardEl.lastChild)
     dHitCount--
   }
+
   aceCount = 0
   dAceCount = 0
   wagerTotal = 0
-  
   playerCount.textContent = `0`
   dealerCount.textContent = `0`
+
   if (totalEarnings === 0) {
     resultEl.style.display = 'none'
     resetBtn.style.display = ''
@@ -472,7 +468,7 @@ function disableWagers() {
   })
 }
 
-// basically copied from memory-game 
+// copied from memory-game 
 function shuffleDeck(deck) {
   let cardsToShuffle = [...deck]
   let shuffleAmount = cardsToShuffle.length
