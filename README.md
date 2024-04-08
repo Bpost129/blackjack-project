@@ -12,7 +12,7 @@
 ## [Shoot for 21](https://blackjack-bp.netlify.app/)
 
 ### Rules:
-1. Press "PLAY" to begin
+1. Press **"PLAY"** to begin
 2. Place a wager of your choosing
 3. Click "DEAL" button to start dealing cards
 4. Once the cards are dealt, you can..
