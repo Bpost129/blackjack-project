@@ -71,7 +71,6 @@ resetBtn.addEventListener('click', reset)
 
 init()
 
-
 function init() {
   gameDeck = shuffleDeck(deckCopy)
   turn = -1
@@ -126,8 +125,6 @@ function handleDeal() {
     setTimeout(handleStand, 1000)
   }
 }
-
-
 
 function handleHit() {
   doubleBtn.disabled = true
