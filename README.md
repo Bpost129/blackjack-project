@@ -41,3 +41,6 @@ Both the [card deck](https://github.com/SEI-Remote/css-card-deck) and [shuffle f
 Sound effects provided by [freesound](https://freesound.org/) and [pixabay](https://pixabay.com/sound-effects/)
 
 The wild-west-themed font can be found [here](https://fonts.google.com/specimen/Alfa+Slab+One?query=alfa)
+
+
+### [Planning Materials](https://docs.google.com/document/d/19S87vkwT3xJzGzHSnw3kQJYI3WjK_XZUzAq2waESLKg/edit?usp=sharing)
