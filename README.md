@@ -14,13 +14,13 @@
 ### Instructions:
 1. Press **"PLAY"** to begin
 2. Place a wager of your choosing
-3. Click **"DEAL"** button to start dealing cards
+3. Click **"DEAL"** to start dealing cards
 4. Once the cards are dealt, you can..
     * Click **"HIT"** to distribute another card
     * Click **"DOUBLE"** to double your wager for one more card
     * Click **"STAND"** if you don't wish to receive another card
 5. Wait for the dealer to flip their cards
-6. (Hopefully) win!
+6. (Hopefully) **WIN**!
 
 ## Ice Box 
 
